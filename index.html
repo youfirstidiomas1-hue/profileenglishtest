@@ -471,6 +471,18 @@
             .video-container iframe {
                 height: 200px;
             }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .coach-float-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -783,8 +795,7 @@
                 let mimeType = 'audio/webm';
                 if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
                     mimeType = 'audio/webm;codecs=opus';
-                } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
-                    mimeType = 'audio/ogg;codecs=opus';
+                } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {mimeType = 'audio/ogg;codecs=opus';
                 } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
                     mimeType = 'audio/mp4';
                 }
@@ -956,19 +967,6 @@
             }
         }
         
-        // Acceder al panel coach
-        function accessCoachPanel() {
-            const password = document.getElementById('coachPasswordSuccess').value;
-            
-            if (password === COACH_PASSWORD) {
-                document.getElementById('successScreen').classList.add('hidden');
-                document.getElementById('coachPanelSection').classList.remove('hidden');
-            } else {
-                alert('❌ Senha incorreta. Tente novamente.');
-                document.getElementById('coachPasswordSuccess').value = '';
-            }
-        }
-        
         // Ocultar todas las secciones
         function hideAllSections() {
             document.getElementById('instructionsSection').classList.add('hidden');
@@ -1074,7 +1072,6 @@
         // Logout
         function logout() {
             document.getElementById('coachPanelSection').classList.add('hidden');
-            document.getElementById('coachPasswordSuccess').value = '';
             checkSystemStatus();
         }
     </script>
