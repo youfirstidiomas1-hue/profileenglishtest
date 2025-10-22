@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YFI Profile Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #2c0439;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a0226 0%, #2c0439 100%);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(191, 158, 75, 0.3);
+        }
+        
+        .header {
+            border-bottom: 3px solid #bf9e4b;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #bf9e4b;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #e0e0e0;
+            font-size: 16px;
+            font-weight: 300;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .status-available {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #4ade80;
+        }
+        
+        .status-occupied {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid #f87171;
+        }
+        
+        .instructions-header {
+            background: rgba(191, 158, 75, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid #bf9e4b;
+        }
+        
+        .instructions-header h2 {
+            color: #bf9e4b;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .instructions-content {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(191, 158, 75, 0.2);
+        }
+        
+        .instruction-item {
+            color: #e0e0e0;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        
+        .instruction-item strong {
+            color: #bf9e4b;
+            font-weight: 600;
+        }
+        
+        .instruction-item em {
+            color: #d4b15f;
+            font-style: italic;
+        }
+        
+        .instruction-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(191, 158, 75, 0.3), transparent);
+            margin: 25px 0;
+        }
+        
+        .instruction-can {
+            background: rgba(191, 158, 75, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #bf9e4b;
+        }
+        
+        .instruction-cannot {
+            background: rgba(220, 38, 38, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #dc2626;
+            color: #ffcccc;
+        }
+        
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 30px;
+        }
+        
+        .info-box h3 {
+            color: #60a5fa;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #e0e0e0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 300;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #bf9e4b, #d4b15f);
+            color: #2c0439;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #bf9e4b;
+            border: 2px solid #bf9e4b;
+        }
+        
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .btn:disabled {
+            background: rgba(191, 158, 75, 0.3);
+            color: rgba(224, 224, 224, 0.5);
+            border-color: rgba(191, 158, 75, 0.3);
+            cursor: not-allowed;
+        }
+        
+        .btn-large {
+            padding: 16px 40px;
+            font-size: 17px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-record {
+            background: #bf9e4b;
+            color: #2c0439;
+        }
+        
+        .btn-recording {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .progress-bar {
+            background: rgba(191, 158, 75, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #bf9e4b, #d4b15f);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-header {
+            background: rgba(191, 158, 75, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid #bf9e4b;
+        }
+        
+        .question-header h2 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .question-section {
+            margin-bottom: 30px;
+        }
+        
+        .question-label {
+            display: block;
+            color: #bf9e4b;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .question-text {
+            color: #e0e0e0;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        .question-text strong {
+            font-weight: 600;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid rgba(191, 158, 75, 0.3);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-weight: 300;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            border-color: #bf9e4b;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(191, 158, 75, 0.15);
+            padding: 12px 20px;
+            border-radius: 8px;
+            flex: 1;
+            border: 1px solid rgba(191, 158, 75, 0.3);
+        }
+        
+        .audio-play-btn {
+            background: #bf9e4b;
+            color: #2c0439;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        
+        .audio-player span {
+            color: #e0e0e0;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        
+        .btn-rerecord {
+            background: transparent;
+            color: #bf9e4b;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+            margin-left: auto;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 10px;
+        }
+        
+        .success-screen {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #bf9e4b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: #2c0439;
+        }
+        
+        .success-screen h2 {
+            color: #bf9e4b;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .success-screen p {
+            color: #e0e0e0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .coach-panel {
+            background: rgba(191, 158, 75, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 2px solid rgba(191, 158, 75, 0.3);
+        }
+        
+        .coach-panel h3 {
+            color: #bf9e4b;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(191, 158, 75, 0.3);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        
+        .password-input:focus {
+            border-color: #bf9e4b;
+        }
+        
+        .coach-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .video-container {
+            margin-top: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+        }
+        
+        .coach-float-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #bf9e4b, #d4b15f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(191, 158, 75, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+            border: none;
+        }
+        
+        .coach-float-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(191, 158, 75, 0.6);
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid #fbbf24;
+            color: #fcd34d;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .video-container iframe {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>YFI Profile Test</h1>
+            <p>Avaliação de Proficiência em Inglês</p>
+            <span class="status-badge status-available" id="statusBadge">● Disponível</span>
+        </div>
+        
+        <!-- Sistema bloqueado -->
+        <div id="blockedSection" class="hidden">
+            <div class="alert alert-warning">
+                <strong>⚠️ Sistema ocupado</strong><br>
+                Há um teste em andamento. Por favor, aguarde a coach liberar o sistema.
+            </div>
+        </div>
+        
+        <!-- Instrucciones -->
+        <div id="instructionsSection">
+            <div class="info-box">
+                <h3>📊 Sobre esta avaliação</h3>
+                <p>Esta avaliação é analisada <strong>humanamente</strong> pela sua coach para criar um perfil personalizado do seu nível de inglês. Os resultados serão utilizados para desenvolver um plano de estudo específico para você.</p>
+            </div>
+            
+            <div class="instructions-header">
+                <h2>Instruções Essenciais</h2>
+            </div>
+            
+            <div class="instructions-content">
+                <div class="instruction-item">
+                    <strong>Objetivo:</strong> apenas para saber seu nível atual. Não há respostas "erradas" e você não pode ser "reprovado"
+                </div>
+                
+                <div class="instruction-item">
+                    <strong>Formato:</strong> Você responderá a 6 perguntas: 3 Orais e 3 Escritas.
+                </div>
+                
+                <div class="instruction-item">
+                    <strong>Conteúdo:</strong> As perguntas são gerais. Você pode mentir, inventar ou falar sobre outra pessoa para continuar a conversa.
+                </div>
+                
+                <div class="instruction-item">
+                    <strong>Dicas:</strong> Relaxe! Escolha um lugar silencioso. Tente relacionar suas respostas ao seu objetivo (viagem, trabalho, etc.).
+                </div>
+                
+                <div class="instruction-divider"></div>
+                
+                <div class="instruction-item instruction-can">
+                    ✓ Você pode dizer: <em>"I don't know"</em>, <em>"I have no idea"</em> ou <em>IDK</em>.
+                </div>
+                
+                <div class="instruction-item instruction-cannot">
+                    ❌ NÃO pode usar sua língua materna. (Apenas inglês)
+                </div>
+                
+                <div class="instruction-item instruction-cannot" style="margin-top: 15px;">
+                    🎤 <strong>Importante:</strong> Este teste precisa acessar seu microfone. Quando clicar em "Gravar Áudio", permita o acesso quando solicitado pelo navegador.
+                </div>
+            </div>
+            
+            <button class="btn btn-primary btn-large" id="startBtn">Começar o Test →</button>
+        </div>
+        
+        <!-- Barra de progreso -->
+        <div id="progressBar" class="progress-bar hidden">
+            <div id="progressBarFill" class="progress-bar-fill" style="width: 33%"></div>
+        </div>
+        
+        <!-- Preguntas -->
+        <div id="questionSection" class="hidden">
+            <div class="question-header">
+                <h2 id="questionNumber">Question 1 of 3</h2>
+            </div>
+            
+            <div class="question-section">
+                <label class="question-label">📝 Written response:</label>
+                <p class="question-text" id="textQuestion"></p>
+                <textarea id="textAnswer" placeholder="Type your answer here..."></textarea>
+            </div>
+            
+            <div class="question-section">
+                <label class="question-label">🎤 Audio response:</label>
+                <p class="question-text" id="audioQuestion"></p>
+                <div class="audio-controls" id="audioControls">
+                    <button class="btn btn-record" id="recordBtn">🎤 Gravar Áudio</button>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" disabled>← Anterior</button>
+                <button class="btn btn-primary" id="nextBtn">Próxima →</button>
+            </div>
+        </div>
+        
+        <!-- Pantalla de éxito -->
+        <div id="successScreen" class="success-screen hidden">
+            <div class="success-icon">✓</div>
+            <h2>Teste Concluído!</h2>
+            <p>Obrigado por completar o teste de perfil.<br/>Suas respostas foram salvas temporariamente e serão analisadas pela sua coach.</p>
+            
+            <div class="info-box" style="text-align: left;">
+                <h3>📋 Próximos Passos</h3>
+                <p><strong>Por favor, tenha paciência durante a análise.</strong> Este é um processo cuidadoso e personalizado.<br><br>
+                Sua coach irá:<br>
+                • Analisar suas respostas escritas e orais<br>
+                • Avaliar seu nível de proficiência<br>
+                • Criar um perfil personalizado<br>
+                • Desenvolver um plano de estudo específico para você</p>
+            </div>
+            
+            <div class="info-box" style="text-align: left; background: rgba(191, 158, 75, 0.1); border-left-color: #bf9e4b;">
+                <h3>🎬 Enquanto isso... Sua primeira tarefa!</h3>
+                <p style="margin-bottom: 15px;">Assista ao vídeo abaixo para começar sua jornada de aprendizado:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/w-jmGP7V8e4?si=YvsEtey-5jSLFQNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Panel de coach -->
+        <div id="coachPanelSection" class="hidden">
+            <div class="success-icon" style="background: #60a5fa;">👩‍🏫</div>
+            <h2 style="color: #bf9e4b; margin-bottom: 20px; font-weight: 600;">Painel Coach</h2>
+            
+            <div class="info-box">
+                <h3>📊 Teste Aguardando Análise</h3>
+                <p id="testInfo">Há respostas salvas aguardando sua análise humanizada para criar o perfil do aluno.</p>
+            </div>
+            
+            <div class="coach-actions">
+                <button class="btn btn-primary" id="downloadBtn" style="flex: 1;">
+                    📥 Baixar Resultados
+                </button>
+                <button class="btn btn-danger" id="clearBtn" style="flex: 1;">
+                    🔓 Limpar e Liberar Sistema
+                </button>
+            </div>
+            
+            <button class="btn btn-secondary" id="logoutBtn" style="margin-top: 20px; width: 100%;">
+                ← Voltar
+            </button>
+        </div>
+        
+        <!-- Botón flotante para coach -->
+        <button class="coach-float-btn" id="floatCoachBtn" title="Acesso Coach">
+            👩‍🏫
+        </button>
+    </div>
+
+    <script>
+        // Configuración
+        const COACH_PASSWORD = 'coach123';
+        
+        // Preguntas
+        const questions = [
+            {
+                emoji: '☀️',
+                textQuestion: 'What do you do <strong>every day</strong>? Tell me about your <u>daily</u> routine.',
+                audioQuestion: 'What did you do <strong>yesterday</strong>? Describe your day <strong>from morning to evening</strong>.',
+                textPlain: 'What do you do every day? Tell me about your daily routine.',
+                audioPlain: 'What did you do yesterday? Describe your day from morning to evening.'
+            },
+            {
+                emoji: '🔧',
+                textQuestion: 'Can you describe a challenging situation you <strong>faced</strong> at work or in your personal life? How did you <strong>handle</strong> it?',
+                audioQuestion: 'Tell me about a time when you <strong>had to learn</strong> something new quickly. What <strong>steps did you take</strong>?',
+                textPlain: 'Can you describe a challenging situation you faced at work or in your personal life? How did you handle it?',
+                audioPlain: 'Tell me about a time when you had to learn something new quickly. What steps did you take?'
+            },
+            {
+                emoji: '💡',
+                textQuestion: "What's your perspective on how technology is <strong>reshaping</strong> modern education? Do you think it's beneficial or does it present significant drawbacks?",
+                audioQuestion: 'If you <strong>could change</strong> one thing about how English is <strong>taught</strong>, what <strong>would it be</strong> and why?',
+                textPlain: "What's your perspective on how technology is reshaping modern education? Do you think it's beneficial or does it present significant drawbacks?",
+                audioPlain: 'If you could change one thing about how English is taught, what would it be and why?'
+            }
+        ];
+        
+        // Variables globales
+        let currentStep = 0;
+        let responses = {
+            text1: '', text2: '', text3: '',
+            audio1: null, audio2: null, audio3: null
+        };
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let currentAudio = null;
+        let currentAudioPlaying = false;
+        
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSystemStatus();
+            setupEventListeners();
+        });
+        
+        // Configurar event listeners
+        function setupEventListeners() {
+            document.getElementById('startBtn').addEventListener('click', startTest);
+            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('floatCoachBtn').addEventListener('click', showCoachAccess);
+            document.getElementById('downloadBtn').addEventListener('click', downloadCoachResults);
+            document.getElementById('clearBtn').addEventListener('click', clearAndRelease);
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+        }
+        
+        // Verificar estado del sistema
+        function checkSystemStatus() {
+            const hasResults = sessionStorage.getItem('testResults');
+            const statusBadge = document.getElementById('statusBadge');
+            
+            if (hasResults) {
+                statusBadge.textContent = '● Ocupado';
+                statusBadge.className = 'status-badge status-occupied';
+                document.getElementById('instructionsSection').classList.add('hidden');
+                document.getElementById('blockedSection').classList.remove('hidden');
+            } else {
+                statusBadge.textContent = '● Disponível';
+                statusBadge.className = 'status-badge status-available';
+                document.getElementById('blockedSection').classList.add('hidden');
+                document.getElementById('instructionsSection').classList.remove('hidden');
+            }
+        }
+        
+        // Iniciar test
+        function startTest() {
+            const hasResults = sessionStorage.getItem('testResults');
+            if (hasResults) {
+                alert('❌ Sistema ocupado. Aguarde a coach liberar o sistema.');
+                return;
+            }
+            
+            document.getElementById('instructionsSection').classList.add('hidden');
+            document.getElementById('progressBar').classList.remove('hidden');
+            document.getElementById('questionSection').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+        
+        // Cargar pregunta
+        function loadQuestion() {
+            const question = questions[currentStep];
+            
+            document.getElementById('questionNumber').textContent = `Question ${currentStep + 1} of 3`;
+            document.getElementById('textQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.textQuestion}`;
+            document.getElementById('audioQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.audioQuestion}`;
+            document.getElementById('textAnswer').value = responses[`text${currentStep + 1}`] || '';
+            
+            updateProgressBar();
+            updateButtons();
+            loadAudioControls();
+        }
+        
+        // Actualizar barra de progreso
+        function updateProgressBar() {
+            const progress = ((currentStep + 1) / 3) * 100;
+            document.getElementById('progressBarFill').style.width = progress + '%';
+        }
+        
+        // Actualizar botones
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            document.getElementById('nextBtn').textContent = currentStep === 2 ? 'Enviar Teste ✓' : 'Próxima →';
+        }
+        
+        // Cargar controles de audio
+        function loadAudioControls() {
+            const audioKey = `audio${currentStep + 1}`;
+            const controls = document.getElementById('audioControls');
+            
+            if (responses[audioKey]) {
+                controls.innerHTML = `
+                    <div class="audio-player">
+                        <button class="audio-play-btn" id="playBtn">▶</button>
+                        <span>Áudio gravado</span>
+                        <button class="btn-rerecord" id="rerecordBtn">Regravar</button>
+                    </div>
+                `;
+                document.getElementById('playBtn').addEventListener('click', toggleAudioPlayback);
+                document.getElementById('rerecordBtn').addEventListener('click', deleteAudio);
+            } else {
+                controls.innerHTML = '<button class="btn btn-record" id="recordBtn">🎤 Gravar Áudio</button>';
+                document.getElementById('recordBtn').addEventListener('click', toggleRecording);
+            }
+        }
+        
+        // Toggle recording
+        async function toggleRecording() {
+            if (isRecording) {
+                stopRecording();
+            } else {
+                await startRecording();
+            }
+        }
+        
+        // Iniciar grabación
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    } 
+                });
+                
+                let mimeType = 'audio/webm';
+                if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+                    mimeType = 'audio/webm;codecs=opus';
+                } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+                    mimeType = 'audio/ogg;codecs=opus';
+                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                    mimeType = 'audio/mp4';
+                }
+                
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: mimeType });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    responses[`audio${currentStep + 1}`] = {
+                        url: audioUrl,
+                        blob: audioBlob,
+                        mimeType: mimeType
+                    };
+                    stream.getTracks().forEach(track => track.stop());
+                    loadAudioControls();
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                
+                document.getElementById('recordBtn').innerHTML = '⏹ Parar Gravação';
+                document.getElementById('recordBtn').className = 'btn btn-recording';
+            } catch (err) {
+                console.error('Erro ao acessar microfone:', err);
+                alert('Erro ao acessar o microfone. Por favor, verifique as permissões do navegador e tente novamente.');
+            }
+        }
+        
+        // Detener grabación
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+            }
+        }
+        
+        // Toggle audio playback
+        function toggleAudioPlayback() {
+            const audioData = responses[`audio${currentStep + 1}`];
+            if (!audioData) return;
+            
+            if (!currentAudio) {
+                currentAudio = new Audio(audioData.url);
+                currentAudio.onended = () => {
+                    currentAudioPlaying = false;
+                    document.getElementById('playBtn').textContent = '▶';
+                };
+            }
+            
+            if (currentAudioPlaying) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudioPlaying = false;
+                document.getElementById('playBtn').textContent = '▶';
+            } else {
+                currentAudio.play();
+                currentAudioPlaying = true;
+                document.getElementById('playBtn').textContent = '⏸';
+            }
+        }
+        
+        // Eliminar audio
+        function deleteAudio() {
+            responses[`audio${currentStep + 1}`] = null;
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            currentAudioPlaying = false;
+            loadAudioControls();
+        }
+        
+        // Guardar respuesta actual
+        function saveCurrentAnswer() {
+            responses[`text${currentStep + 1}`] = document.getElementById('textAnswer').value;
+        }
+        
+        // Siguiente pregunta
+        function nextQuestion() {
+            saveCurrentAnswer();
+            
+            if (currentStep === 2) {
+                submitTest();
+            } else {
+                currentStep++;
+                loadQuestion();
+            }
+        }
+        
+        // Pregunta anterior
+        function prevQuestion() {
+            saveCurrentAnswer();
+            
+            if (currentStep > 0) {
+                currentStep--;
+                loadQuestion();
+            }
+        }
+        
+        // Enviar test
+        function submitTest() {
+            const testData = {
+                timestamp: new Date().toISOString(),
+                responses: {
+                    text1: responses.text1,
+                    text2: responses.text2,
+                    text3: responses.text3,
+                    audio1: responses.audio1 ? true : false,
+                    audio2: responses.audio2 ? true : false,
+                    audio3: responses.audio3 ? true : false
+                },
+                audioBlobs: {}
+            };
+            
+            const promises = [];
+            [1, 2, 3].forEach(num => {
+                const audioData = responses[`audio${num}`];
+                if (audioData && audioData.blob) {
+                    promises.push(
+                        new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                                testData.audioBlobs[`audio${num}`] = {
+                                    data: reader.result,
+                                    mimeType: audioData.mimeType
+                                };
+                                resolve();
+                            };
+                            reader.readAsDataURL(audioData.blob);
+                        })
+                    );
+                }
+            });
+            
+            Promise.all(promises).then(() => {
+                sessionStorage.setItem('testResults', JSON.stringify(testData));
+                
+                document.getElementById('questionSection').classList.add('hidden');
+                document.getElementById('progressBar').classList.add('hidden');
+                document.getElementById('successScreen').classList.remove('hidden');
+                
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = '● Ocupado';
+                statusBadge.className = 'status-badge status-occupied';
+            });
+        }
+        
+        // Mostrar acceso coach
+        function showCoachAccess() {
+            const password = prompt('🔐 Acesso Coach\n\nDigite a senha:');
+            if (password === COACH_PASSWORD) {
+                hideAllSections();
+                document.getElementById('coachPanelSection').classList.remove('hidden');
+                
+                const hasResults = sessionStorage.getItem('testResults');
+                if (!hasResults) {
+                    document.getElementById('testInfo').textContent = 'Não há testes aguardando análise no momento. O sistema está livre para novos alunos.';
+                }
+            } else if (password !== null) {
+                alert('❌ Senha incorreta.');
+            }
+        }
+        
+        // Acceder al panel coach
+        function accessCoachPanel() {
+            const password = document.getElementById('coachPasswordSuccess').value;
+            
+            if (password === COACH_PASSWORD) {
+                document.getElementById('successScreen').classList.add('hidden');
+                document.getElementById('coachPanelSection').classList.remove('hidden');
+            } else {
+                alert('❌ Senha incorreta. Tente novamente.');
+                document.getElementById('coachPasswordSuccess').value = '';
+            }
+        }
+        
+        // Ocultar todas las secciones
+        function hideAllSections() {
+            document.getElementById('instructionsSection').classList.add('hidden');
+            document.getElementById('blockedSection').classList.add('hidden');
+            document.getElementById('questionSection').classList.add('hidden');
+            document.getElementById('progressBar').classList.add('hidden');
+            document.getElementById('successScreen').classList.add('hidden');
+            document.getElementById('coachPanelSection').classList.add('hidden');
+        }
+        
+        // Descargar resultados
+        function downloadCoachResults() {
+            const testData = JSON.parse(sessionStorage.getItem('testResults'));
+            if (!testData) {
+                alert('❌ Nenhum resultado encontrado.');
+                return;
+            }
+            
+            const levels = ['A2', 'B1', 'B2'];
+            const date = new Date(testData.timestamp);
+            
+            let textContent = 'YFI PROFILE TEST - RESULTADOS PARA ANÁLISE HUMANIZADA\n';
+            textContent += '='.repeat(60) + '\n\n';
+            textContent += `Data: ${date.toLocaleString('pt-BR')}\n`;
+            textContent += `Timestamp: ${testData.timestamp}\n\n`;
+            textContent += 'INSTRUÇÕES PARA COACH:\n';
+            textContent += 'Analise as respostas escritas e orais para criar um perfil\n';
+            textContent += 'personalizado do nível de inglês do aluno.\n\n';
+            textContent += '='.repeat(60) + '\n\n';
+            
+            questions.forEach((q, i) => {
+                textContent += `\n--- PERGUNTA ${i + 1} (Nível ${levels[i]}) ---\n\n`;
+                textContent += `📝 PERGUNTA ESCRITA:\n${q.textPlain}\n\n`;
+                textContent += `RESPOSTA ESCRITA:\n${testData.responses[`text${i + 1}`] || '[Sem resposta]'}\n\n`;
+                textContent += `🎤 PERGUNTA ORAL:\n${q.audioPlain}\n\n`;
+                textContent += `RESPOSTA ORAL: ${testData.responses[`audio${i + 1}`] ? 'Áudio gravado (arquivo separado)' : '[Sem áudio gravado]'}\n\n`;
+                textContent += '='.repeat(60) + '\n';
+            });
+            
+            textContent += '\n\nNOTAS PARA ANÁLISE:\n';
+            textContent += '- Vocabulário utilizado\n';
+            textContent += '- Estruturas gramaticais\n';
+            textContent += '- Fluência e pronúncia (áudios)\n';
+            textContent += '- Coerência e coesão\n';
+            textContent += '- Complexidade das respostas\n';
+            
+            const textBlob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+            const textUrl = URL.createObjectURL(textBlob);
+            const textLink = document.createElement('a');
+            textLink.href = textUrl;
+            textLink.download = `YFI_test_${date.getTime()}.txt`;
+            textLink.click();
+            URL.revokeObjectURL(textUrl);
+            
+            [1, 2, 3].forEach(num => {
+                const audioData = testData.audioBlobs[`audio${num}`];
+                if (audioData) {
+                    const link = document.createElement('a');
+                    link.href = audioData.data;
+                    
+                    let extension = 'webm';
+                    if (audioData.mimeType.includes('ogg')) {
+                        extension = 'ogg';
+                    } else if (audioData.mimeType.includes('mp4')) {
+                        extension = 'mp4';
+                    }
+                    
+                    link.download = `YFI_audio_Q${num}_${date.getTime()}.${extension}`;
+                    link.click();
+                }
+            });
+            
+            let message = 'Arquivos baixados com sucesso!\n\n✓ Respostas escritas (TXT)\n';
+            if (testData.responses.audio1) message += '✓ Áudio Pergunta 1\n';
+            if (testData.responses.audio2) message += '✓ Áudio Pergunta 2\n';
+            if (testData.responses.audio3) message += '✓ Áudio Pergunta 3\n';
+            message += '\n📊 Analise os resultados para criar o perfil do aluno.';
+            
+            alert(message);
+        }
+        
+        // Limpiar y liberar
+        function clearAndRelease() {
+            if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado os resultados antes de continuar.')) {
+                sessionStorage.removeItem('testResults');
+                
+                currentStep = 0;
+                responses = {
+                    text1: '', text2: '', text3: '',
+                    audio1: null, audio2: null, audio3: null
+                };
+                
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = '● Disponível';
+                statusBadge.className = 'status-badge status-available';
+                
+                alert('✓ Sistema liberado com sucesso!\n\nO próximo aluno já pode fazer o teste.');
+                
+                logout();
+            }
+        }
+        
+        // Logout
+        function logout() {
+            document.getElementById('coachPanelSection').classList.add('hidden');
+            document.getElementById('coachPasswordSuccess').value = '';
+            checkSystemStatus();
+        }
+    </script>
+</body>
+</html>
