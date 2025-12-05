@@ -6,6 +6,7 @@
     <title>YFI Profile Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Tu código CSS completo va aquí, sin cambios */
         * {
             margin: 0;
             padding: 0;
@@ -494,7 +495,6 @@
             <span class="status-badge status-available" id="statusBadge">● Disponível</span>
         </div>
         
-        <!-- Sistema bloqueado -->
         <div id="blockedSection" class="hidden">
             <div class="alert alert-warning">
                 <strong>⚠️ Sistema ocupado</strong><br>
@@ -502,7 +502,6 @@
             </div>
         </div>
         
-        <!-- Instrucciones -->
         <div id="instructionsSection">
             <div class="info-box">
                 <h3>📊 Sobre esta avaliação</h3>
@@ -515,7 +514,7 @@
             
             <div class="instructions-content">
                 <div class="instruction-item">
-                    <strong>Objetivo:</strong> apenas para saber seu nível atual. Não há respostas "erradas" e você não pode ser "reprovado"
+                    <strong>Objetivo:</strong> apenas para saber seu nível atual. Não há respostas "erradas" y usted no puede ser "reprovado"
                 </div>
                 
                 <div class="instruction-item">
@@ -548,12 +547,10 @@
             <button class="btn btn-primary btn-large" id="startBtn">Começar o Test →</button>
         </div>
         
-        <!-- Barra de progreso -->
         <div id="progressBar" class="progress-bar hidden">
             <div id="progressBarFill" class="progress-bar-fill" style="width: 33%"></div>
         </div>
         
-        <!-- Preguntas -->
         <div id="questionSection" class="hidden">
             <div class="question-header">
                 <h2 id="questionNumber">Question 1 of 3</h2>
@@ -579,7 +576,6 @@
             </div>
         </div>
         
-        <!-- Pantalla de éxito -->
         <div id="successScreen" class="success-screen hidden">
             <div class="success-icon">✓</div>
             <h2>Teste Concluído!</h2>
@@ -588,7 +584,7 @@
             <div class="info-box" style="text-align: left;">
                 <h3>📋 Próximos Passos</h3>
                 <p><strong>Por favor, tenha paciência durante a análise.</strong> Este é um processo cuidadoso e personalizado.<br><br>
-                Sua coach irá:<br>
+                Suas coach irá:<br>
                 • Analisar suas respostas escritas e orais<br>
                 • Avaliar seu nível de proficiência<br>
                 • Criar um perfil personalizado<br>
@@ -596,7 +592,7 @@
             </div>
             
             <div class="info-box" style="text-align: left; background: rgba(191, 158, 75, 0.1); border-left-color: #bf9e4b;">
-                <h3>🎬 Enquanto isso... Sua primeira tarefa!</h3>
+                <h3>🎬 Enquanto isso... Suas primeira tarefa!</h3>
                 <p style="margin-bottom: 15px;">Assista ao vídeo abaixo para começar sua jornada de aprendizado:</p>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/w-jmGP7V8e4?si=YvsEtey-5jSLFQNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -604,7 +600,6 @@
             </div>
         </div>
         
-        <!-- Panel de coach -->
         <div id="coachPanelSection" class="hidden">
             <div class="success-icon" style="background: #60a5fa;">👩‍🏫</div>
             <h2 style="color: #bf9e4b; margin-bottom: 20px; font-weight: 600;">Painel Coach</h2>
@@ -628,18 +623,15 @@
             </button>
         </div>
         
-        <!-- Botón flotante para coach -->
         <button class="coach-float-btn" id="floatCoachBtn" title="Acesso Coach">
             👩‍🏫
         </button>
     </div>
 
-    <script>// index.html (DENTRO del <script> al final del body)
-
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
-
-<script src="app.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+    
+    <script src="app.js"></script>
 
 </body>
 </html>
