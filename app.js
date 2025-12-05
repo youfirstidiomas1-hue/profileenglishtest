@@ -1,7 +1,7 @@
 // app.js - Este archivo contiene toda la lógica de JavaScript.
 // ¡Asegúrate de que este archivo esté en la misma carpeta que index.html!
 
-// 1. CONFIGURACIÓN Y CONEXIÓN A FIREBASE (CORREGIDO)
+// 1. CONFIGURACIÓN Y CONEXIÓN A FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs", // Tu clave API
   authDomain: "tests-data-55907.firebaseapp.com",
@@ -282,7 +282,7 @@ function prevQuestion() {
     }
 }
 
-// FUNCIÓN submitTest para FIREBASE STORAGE
+// FUNCIÓN submitTest para FIREBASE STORAGE (CORREGIDA)
 function submitTest() {
     saveCurrentAnswer();
     
@@ -322,19 +322,24 @@ function submitTest() {
                     uploadTask.on('state_changed', 
                         // Sin seguimiento de progreso
                         () => {}, 
-                        // Manejo de error
+                        // Manejo de error (CORREGIDO: Ahora usamos reject)
                         (error) => {
                             console.error(`Error al subir audio Q${num}:`, error);
-                            alert(`Error al subir audio Q${num}. Revisa la consola.`);
-                            // Permite que el test continúe incluso si la subida falla
-                            resolve(null); 
+                            // Muestra una alerta específica si Firebase deniega el permiso
+                            if (error.code === 'storage/unauthorized') {
+                                alert(`❌ ERROR: Permiso de subida denegado (storage/unauthorized). Por favor, VERIFICA las Reglas de Seguridad de Firebase Storage.`);
+                            } else {
+                                alert(`❌ Error de Firebase al subir audio Q${num}: ${error.code}.`);
+                            }
+                            // Rechazamos la promesa para forzar el fallo de Promise.all
+                            reject(error); 
                         }, 
                         // Subida completada
                         () => {
                             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                                 // Guardamos la URL de descarga para el coach
                                 textOnlyData.responses[`audio${num}URL`] = downloadURL;
-                                resolve(downloadURL);
+                                resolve(downloadURL); // Resolvemos (éxito)
                             });
                         }
                     );
@@ -343,23 +348,28 @@ function submitTest() {
         }
     });
     
-    // 3. Esperar a que todos los audios terminen de subir antes de mostrar la pantalla de éxito
-    Promise.all(uploadPromises).then(() => {
-        // Guardar la data (sin los blobs de audio) en sessionStorage
-        sessionStorage.setItem('testResults', JSON.stringify(textOnlyData)); 
-        
-        // Mostrar la pantalla de éxito
-        document.getElementById('questionSection').classList.add('hidden');
-        document.getElementById('progressBar').classList.add('hidden');
-        document.getElementById('successScreen').classList.remove('hidden');
-        
-        // Actualizar el estado
-        const statusBadge = document.getElementById('statusBadge');
-        statusBadge.textContent = '● Ocupado';
-        statusBadge.className = 'status-badge status-occupied';
-        
-        alert("¡Test enviado con éxito! Audios subidos a Firebase Storage.");
-    });
+    // 3. Esperar a que todos los audios terminen de subir (o que uno falle)
+    Promise.all(uploadPromises)
+        .then(() => {
+            // ÉXITO: Todos los audios subieron correctamente
+            sessionStorage.setItem('testResults', JSON.stringify(textOnlyData)); 
+            
+            document.getElementById('questionSection').classList.add('hidden');
+            document.getElementById('progressBar').classList.add('hidden');
+            document.getElementById('successScreen').classList.remove('hidden');
+            
+            const statusBadge = document.getElementById('statusBadge');
+            statusBadge.textContent = '● Ocupado';
+            statusBadge.className = 'status-badge status-occupied';
+            
+            alert("¡Test enviado con éxito! Audios subidos a Firebase Storage.");
+        })
+        .catch(error => {
+            // FALLO: Al menos una subida falló (ya se mostró una alerta en el paso 2)
+            console.error("Fallo general en la subida de audios. El test NO fue guardado.", error);
+            // El usuario ya fue notificado del error específico de Firebase en el paso anterior.
+            // No hacemos nada más para evitar mensajes duplicados, el test no se guarda.
+        });
 }
 // -----------------------------------------------------------------------
 
@@ -414,7 +424,7 @@ function downloadCoachResults() {
         textContent += `\n--- PERGUNTA ${i + 1} (Nível ${levels[i]}) ---\n\n`;
         textContent += `📝 PERGUNTA ESCRITA:\n${q.textPlain}\n\n`;
         textContent += `RESPOSTA ESCRITA:\n${testData.responses[`text${i + 1}`] || '[Sem resposta]'}\n\n`;
-        // Muestra la URL de Firebase si existe
+        
         const audioStatus = testData.responses[`audio${i + 1}URL`] 
             ? `Áudio gravado. URL Firebase: ${testData.responses[`audio${i + 1}URL`]}` 
             : '[Sem áudio gravado]';
@@ -447,7 +457,7 @@ function downloadCoachResults() {
 
 // Limpiar y liberar
 function clearAndRelease() {
-    if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado los resultados antes de continuar.')) {
+    if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado os resultados antes de continuar.')) {
         sessionStorage.removeItem('testResults');
         
         currentStep = 0;
