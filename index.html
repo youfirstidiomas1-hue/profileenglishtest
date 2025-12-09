@@ -824,14 +824,14 @@
                     }
                 };
                 
+                // 🛑 CORRECCIÓN: Asegurar que el stream se detenga solo después de crear el Blob.
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: mimeType });
                     
-                    // Detener todos los tracks del stream para liberar el micrófono
+                    // Detener todos los tracks del stream para liberar el micrófono. ESTO DEBE IR AQUÍ.
                     stream.getTracks().forEach(track => track.stop()); 
 
                     const audioUrl = URL.createObjectURL(audioBlob);
-                    // CRÍTICO: Guardar el BLOB, no solo la URL, para la subida.
                     responses[`audio${currentStep + 1}`] = {
                         url: audioUrl,
                         blob: audioBlob,
