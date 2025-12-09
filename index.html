@@ -28,963 +28,703 @@
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             border: 1px solid rgba(191, 158, 75, 0.3);
+            color: #f0f0f0;
         }
         
-        .header {
-            border-bottom: 3px solid #bf9e4b;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
+        h1, h2, h3 {
             color: #bf9e4b;
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            color: #e0e0e0;
-            font-size: 16px;
-            font-weight: 300;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 15px;
-        }
-        
-        .status-available {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            border: 1px solid #4ade80;
-        }
-        
-        .status-occupied {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid #f87171;
-        }
-        
-        .instructions-header {
-            background: rgba(191, 158, 75, 0.15);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border-left: 4px solid #bf9e4b;
-        }
-        
-        .instructions-header h2 {
-            color: #bf9e4b;
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-        }
-        
-        .instructions-content {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(191, 158, 75, 0.2);
-        }
-        
-        .instruction-item {
-            color: #e0e0e0;
-            font-size: 15px;
-            line-height: 1.8;
+            text-align: center;
             margin-bottom: 20px;
-            font-weight: 400;
         }
         
-        .instruction-item strong {
-            color: #bf9e4b;
-            font-weight: 600;
+        h3 {
+            font-size: 1.2em;
+            margin-top: 20px;
         }
         
-        .instruction-item em {
-            color: #d4b15f;
-            font-style: italic;
-        }
-        
-        .instruction-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(191, 158, 75, 0.3), transparent);
-            margin: 25px 0;
-        }
-        
-        .instruction-can {
-            background: rgba(191, 158, 75, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #bf9e4b;
-        }
-        
-        .instruction-cannot {
-            background: rgba(220, 38, 38, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #dc2626;
-            color: #ffcccc;
-        }
-        
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            padding: 20px;
+        .question-box {
+            background: #1a0226;
             border-radius: 12px;
-            border-left: 4px solid #3b82f6;
-            margin-bottom: 30px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-left: 5px solid #bf9e4b;
         }
-        
-        .info-box h3 {
-            color: #60a5fa;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .info-box p {
-            color: #e0e0e0;
-            font-size: 14px;
-            line-height: 1.6;
-            margin: 0;
-            font-weight: 300;
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn:hover:not(:disabled) {
-            transform: scale(1.05);
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #bf9e4b, #d4b15f);
-            color: #2c0439;
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: #bf9e4b;
-            border: 2px solid #bf9e4b;
-        }
-        
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-        }
-        
-        .btn:disabled {
-            background: rgba(191, 158, 75, 0.3);
-            color: rgba(224, 224, 224, 0.5);
-            border-color: rgba(191, 158, 75, 0.3);
-            cursor: not-allowed;
-        }
-        
-        .btn-large {
-            padding: 16px 40px;
-            font-size: 17px;
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .btn-record {
-            background: #bf9e4b;
-            color: #2c0439;
-        }
-        
-        .btn-recording {
-            background: #dc2626;
-            color: white;
-        }
-        
-        .progress-bar {
-            background: rgba(191, 158, 75, 0.2);
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        
-        .progress-bar-fill {
-            background: linear-gradient(90deg, #bf9e4b, #d4b15f);
-            height: 100%;
-            transition: width 0.3s ease;
-        }
-        
-        .question-header {
-            background: rgba(191, 158, 75, 0.15);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border-left: 4px solid #bf9e4b;
-        }
-        
-        .question-header h2 {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
-        }
-        
-        .question-section {
-            margin-bottom: 30px;
-        }
-        
-        .question-label {
-            display: block;
-            color: #bf9e4b;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        
+
         .question-text {
-            color: #e0e0e0;
+            font-size: 1.1em;
             margin-bottom: 15px;
             line-height: 1.6;
-            font-size: 16px;
-            font-weight: 400;
-        }
-        
-        .question-text strong {
-            font-weight: 600;
+            color: #d0d0d0;
         }
         
         textarea {
             width: 100%;
-            min-height: 120px;
+            min-height: 150px;
             padding: 15px;
-            border: 2px solid rgba(191, 158, 75, 0.3);
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: 'Poppins', sans-serif;
-            resize: vertical;
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            font-weight: 300;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        
-        textarea:focus {
-            border-color: #bf9e4b;
-        }
-        
-        .audio-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .audio-player {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(191, 158, 75, 0.15);
-            padding: 12px 20px;
-            border-radius: 8px;
-            flex: 1;
-            border: 1px solid rgba(191, 158, 75, 0.3);
-        }
-        
-        .audio-play-btn {
-            background: #bf9e4b;
-            color: #2c0439;
             border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            border-radius: 8px;
+            background: #3c0651;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        .record-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            flex-shrink: 0;
-            font-size: 14px;
-        }
-        
-        .audio-player span {
-            color: #e0e0e0;
-            font-size: 14px;
-            font-weight: 400;
-        }
-        
-        .btn-rerecord {
-            background: transparent;
-            color: #bf9e4b;
+            width: 100%;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #bf9e4b 0%, #ffd700 100%);
+            color: #1a0226;
             border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
             cursor: pointer;
-            font-size: 14px;
-            text-decoration: underline;
-            margin-left: auto;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(191, 158, 75, 0.5);
+            font-weight: 600;
+        }
+
+        .record-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(191, 158, 75, 0.7);
+        }
+
+        .record-button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            box-shadow: none;
         }
         
-        .navigation {
+        .navigation-buttons {
             display: flex;
             justify-content: space-between;
-            margin-top: 40px;
-            gap: 10px;
-        }
-        
-        .success-screen {
-            text-align: center;
-            padding: 40px 0;
-        }
-        
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            background: #bf9e4b;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 40px;
-            color: #2c0439;
-        }
-        
-        .success-screen h2 {
-            color: #bf9e4b;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        .success-screen p {
-            color: #e0e0e0;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-        
-        .coach-panel {
-            background: rgba(191, 158, 75, 0.1);
-            padding: 30px;
-            border-radius: 12px;
             margin-top: 30px;
-            border: 2px solid rgba(191, 158, 75, 0.3);
         }
-        
-        .coach-panel h3 {
-            color: #bf9e4b;
-            margin-bottom: 20px;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .password-input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid rgba(191, 158, 75, 0.3);
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif;
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            margin-bottom: 15px;
-            outline: none;
-        }
-        
-        .password-input:focus {
-            border-color: #bf9e4b;
-        }
-        
-        .coach-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .video-container {
-            margin-top: 25px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .video-container iframe {
-            width: 100%;
-            height: 315px;
+
+        .nav-button {
+            padding: 12px 25px;
             border: none;
-        }
-        
-        .coach-float-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #bf9e4b, #d4b15f);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
+            border-radius: 8px;
+            font-size: 1em;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(191, 158, 75, 0.4);
-            transition: all 0.3s;
-            z-index: 1000;
-            border: none;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+
+        .prev-button {
+            background: #555;
+            color: white;
+        }
+
+        .prev-button:hover:not(:disabled) {
+            background: #777;
         }
         
-        .coach-float-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(191, 158, 75, 0.6);
+        .next-button {
+            background: #00b894;
+            color: white;
         }
         
-        .alert {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.6;
+        .submit-button {
+            background: #bf9e4b;
+            color: #1a0226;
+            font-weight: 700;
+            width: 100%;
         }
-        
-        .alert-warning {
-            background: rgba(251, 191, 36, 0.1);
-            border-left: 4px solid #fbbf24;
-            color: #fcd34d;
+
+        .submit-button:hover:not(:disabled) {
+            background: #ffd700;
         }
-        
+
         .hidden {
             display: none !important;
         }
         
-        @media (max-width: 768px) {
-            .video-container iframe {
-                height: 200px;
-            }
-            
-            .container {
-                padding: 20px;
-            }
-            
-            .coach-float-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
+        .audio-playback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+            margin-right: 15px;
+        }
+        
+        .status-message {
+            margin-top: 10px;
+            font-style: italic;
+            color: #00b894;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #444;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #bf9e4b 0%, #ffd700 100%);
+            width: 0%;
+            transition: width 0.4s ease-in-out;
+        }
+        
+        .coach-login, .coach-panel {
+            background: #3c0651;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .coach-login input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background: #1a0226;
+            color: white;
+        }
+
+        .coach-login button {
+            background: #bf9e4b;
+            color: #1a0226;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .status-available {
+            background: #00b894;
+            color: white;
+        }
+
+        .status-occupied {
+            background: #ff7675;
+            color: white;
+        }
+        
+        .control-buttons button {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background: #4a4a4a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .control-buttons button:hover {
+            background: #6a6a6a;
+        }
+        
+        .control-buttons .logout-button {
+            background: #d63031;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>YFI Profile Test</h1>
-            <p>Avaliação de Proficiência em Inglês</p>
-            <span class="status-badge status-available" id="statusBadge">● Disponível</span>
-        </div>
-        
-        <div id="blockedSection" class="hidden">
-            <div class="alert alert-warning">
-                <strong>⚠️ Sistema ocupado</strong><br>
-                Há um teste em andamento. Por favor, aguarde a coach liberar o sistema.
+        <h1>YFI Profile Test</h1>
+        <p style="text-align: center; margin-bottom: 30px; color: #aaa;">Prepara tu micrófono y tu concentración. Este test evalúa tu perfil lingüístico.</p>
+
+        <div id="statusSection" class="coach-login">
+            <h2>Panel de Control</h2>
+            <div id="systemStatus">
+                <span id="statusBadge" class="status-badge status-available">● Disponível</span>
             </div>
-        </div>
-        
-        <div id="instructionsSection">
-            <div class="info-box">
-                <h3>📊 Sobre esta avaliação</h3>
-                <p>Esta avaliação é analisada <strong>humanamente</strong> pela sua coach para criar um perfil personalizado do seu nível de inglês. Os resultados serão utilizados para desenvolver um plano de estudo específico para você.</p>
-            </div>
+            <p id="testInstructions" style="color: #ccc; margin-bottom: 15px;">
+                ¡El sistema está libre! Puedes comenzar el test.
+            </p>
+            <button id="startButton" class="record-button" onclick="startTest()">Iniciar Test</button>
             
-            <div class="instructions-header">
-                <h2>Instruções Essenciais</h2>
+            <div id="coachLogin" class="hidden" style="margin-top: 20px;">
+                <h3 style="margin-top: 0; text-align: left;">Acceso Coach</h3>
+                <input type="password" id="coachPassword" placeholder="Contraseña de Coach">
+                <button onclick="loginCoach()">Acceder</button>
             </div>
-            
-            <div class="instructions-content">
-                <div class="instruction-item">
-                    <strong>Objetivo:</strong> apenas para saber seu nível atual. Não há respostas "erradas" y usted no puede ser "reprovado"
-                </div>
-                
-                <div class="instruction-item">
-                    <strong>Formato:</strong> Você responderá a 6 perguntas: 3 Orais e 3 Escritas.
-                </div>
-                
-                <div class="instruction-item">
-                    <strong>Conteúdo:</strong> As perguntas são gerais. Você pode mentir, inventar ou falar sobre outra pessoa para continuar a conversa.
-                </div>
-                
-                <div class="instruction-item">
-                    <strong>Dicas:</strong> Relaxe! Escolha um lugar silencioso. Tente relacionar suas respostas ao seu objetivo (viagem, trabalho, etc.).
-                </div>
-                
-                <div class="instruction-divider"></div>
-                
-                <div class="instruction-item instruction-can">
-                    ✓ Você pode dizer: <em>"I don't know"</em>, <em>"I have no idea"</em> ou <em>IDK</em>.
-                </div>
-                
-                <div class="instruction-item instruction-cannot">
-                    ❌ NÃO pode usar sua língua materna. (Apenas inglês)
-                </div>
-                
-                <div class="instruction-item instruction-cannot" style="margin-top: 15px;">
-                    🎤 <strong>Importante:</strong> Este teste precisa acessar seu microfone. Quando clicar em "Gravar Áudio", permita o acesso quando solicitado pelo navegador.
-                </div>
+        </div>
+
+        <div id="coachPanelSection" class="coach-panel hidden">
+            <h3>Resultados Pendientes</h3>
+            <p style="margin-bottom: 20px;">El test anterior fue completado pero los resultados no se han descargado. Por favor, procesa la información antes de liberar el sistema.</p>
+            <div class="control-buttons">
+                <button onclick="downloadResults()">Descargar Resultados</button>
+                <button class="logout-button" onclick="clearAndRelease()">Limpiar y Liberar</button>
             </div>
-            
-            <button class="btn btn-primary btn-large" id="startBtn">Começar o Test →</button>
         </div>
-        
-        <div id="progressBar" class="progress-bar hidden">
-            <div id="progressBarFill" class="progress-bar-fill" style="width: 33%"></div>
-        </div>
-        
+
         <div id="questionSection" class="hidden">
-            <div class="question-header">
-                <h2 id="questionNumber">Question 1 of 3</h2>
+            <h2 id="stepTitle">Paso 1 de 6</h2>
+            <div id="progressBarContainer" class="progress-bar-container">
+                <div id="progressBar" class="progress-bar"></div>
             </div>
-            
-            <div class="question-section">
-                <label class="question-label">📝 Written response:</label>
-                <p class="question-text" id="textQuestion"></p>
-                <textarea id="textAnswer" placeholder="Type your answer here..."></textarea>
-            </div>
-            
-            <div class="question-section">
-                <label class="question-label">🎤 Audio response:</label>
-                <p class="question-text" id="audioQuestion"></p>
-                <div class="audio-controls" id="audioControls">
-                    <button class="btn btn-record" id="recordBtn">🎤 Gravar Áudio</button>
+
+            <div class="question-box">
+                <div class="question-text" id="currentQuestionText"></div>
+                
+                <textarea id="textResponse" placeholder="Escribe tu respuesta aquí..."></textarea>
+                
+                <div id="audioControls" class="hidden">
+                    <button id="recordButton" class="record-button" onclick="toggleRecording()">
+                        <span id="recordText">🎙️ Grabar Respuesta</span>
+                    </button>
+                    <p id="recordingStatus" class="status-message hidden">Grabando... (Click para detener)</p>
+                    
+                    <div id="playbackSection" class="audio-playback hidden">
+                        <audio id="audioPlayback" controls></audio>
+                        <button class="nav-button" onclick="discardRecording()">X</button>
+                    </div>
                 </div>
             </div>
-            
-            <div class="navigation">
-                <button class="btn btn-secondary" id="prevBtn" disabled>← Anterior</button>
-                <button class="btn btn-primary" id="nextBtn">Próxima →</button>
+
+            <div class="navigation-buttons">
+                <button id="prevButton" class="nav-button prev-button" onclick="prevStep()" disabled>Anterior</button>
+                <button id="nextButton" class="nav-button next-button" onclick="nextStep()">Siguiente</button>
+                <button id="submitButton" class="nav-button submit-button hidden" onclick="submitTest()">Enviar Test</button>
             </div>
         </div>
-        
-        <div id="successScreen" class="success-screen hidden">
-            <div class="success-icon">✓</div>
-            <h2>Teste Concluído!</h2>
-            <p>Obrigado por completar o teste de perfil.<br/>Suas respostas foram salvas temporariamente e serão analisadas pela sua coach.</p>
-            
-            <div class="info-box" style="text-align: left;">
-                <h3>📋 Próximos Passos</h3>
-                <p><strong>Por favor, tenha paciência durante a análise.</strong> Este é um processo cuidadoso e personalizado.<br><br>
-                Suas coach irá:<br>
-                • Analisar suas respostas escritas e orais<br>
-                • Avaliar seu nível de proficiência<br>
-                • Criar um perfil personalizado<br>
-                • Desenvolver um plano de estudo específico para você</p>
-            </div>
-            
-            <div class="info-box" style="text-align: left; background: rgba(191, 158, 75, 0.1); border-left-color: #bf9e4b;">
-                <h3>🎬 Enquanto isso... Suas primeira tarefa!</h3>
-                <p style="margin-bottom: 15px;">Assista ao vídeo abaixo para começar sua jornada de aprendizado:</p>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/w-jmGP7V8e4?si=YvsEtey-5jSLFQNQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-            </div>
+
+        <div id="successScreen" class="coach-panel hidden">
+            <h2>¡Test Completado!</h2>
+            <p style="text-align: center; color: #00b894; font-size: 1.1em;">Gracias por completar tu perfil. Tus resultados se están procesando.</p>
+            <p style="text-align: center; margin-top: 20px;">Por favor, contacta a tu coach para la siguiente etapa.</p>
         </div>
-        
-        <div id="coachPanelSection" class="hidden">
-            <div class="success-icon" style="background: #60a5fa;">👩‍🏫</div>
-            <h2 style="color: #bf9e4b; margin-bottom: 20px; font-weight: 600;">Painel Coach</h2>
-            
-            <div class="info-box">
-                <h3>📊 Teste Aguardando Análise</h3>
-                <p id="testInfo">Há respostas salvas aguardando sua análise humanizada para criar o perfil do aluno.</p>
-            </div>
-            
-            <div class="coach-actions">
-                <button class="btn btn-primary" id="downloadBtn" style="flex: 1;">
-                    📥 Baixar Resultados
-                </button>
-                <button class="btn btn-danger" id="clearBtn" style="flex: 1;">
-                    🔓 Limpar e Liberar Sistema
-                </button>
-            </div>
-            
-            <button class="btn btn-secondary" id="logoutBtn" style="margin-top: 20px; width: 100%;">
-                ← Voltar
-            </button>
-        </div>
-        
-        <button class="coach-float-btn" id="floatCoachBtn" title="Acesso Coach">
-            👩‍🏫
-        </button>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
-    
     <script>
         // 1. CONFIGURACIÓN Y CONEXIÓN A FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs", // Tu clave API
+            apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs",
             authDomain: "tests-data-55907.firebaseapp.com",
             projectId: "tests-data-55907",
-            storageBucket: "tests-data-55907.firebasestorage.app", // Tu Bucket
-            messagingSenderId: "98761713852",
-            appId: "1:98761713852:web:82ecbe775f1322ba0248b9"
+            storageBucket: "tests-data-55907.appspot.com", // CORREGIDO: Usar appspot.com
+            messagingSenderId: "382761713502",
+            appId: "1:382761713502:web:2c8e2b2580a24bb8"
         };
-
+        
+        // Inicializar Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const storage = app.storage(); // Referencia clave a Storage para subir audios
 
-        // 2. CONFIGURACIÓN Y VARIABLES
+        // 2. CONFIGURAÇÃO E VARIÁVEIS
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
-                
-        // Preguntas
+        
+        // 🚨 NUEVA URL DE FIREBASE CLOUD RUN (PROXY)
+        // ESTA es la URL que resuelve el problema CORS y llama a tu GAS internamente.
+        const FIREBASE_FUNCTION_URL = "https://gasproxytask-ypmt62jweq-uc.a.run.app"; 
+
         const questions = [
+            // Paso 1: Escritura - 1
             {
-                emoji: '☀️',
-                textQuestion: 'What do you do <strong>every day</strong>? Tell me about your <u>daily</u> routine.',
-                audioQuestion: 'What did you do <strong>yesterday</strong>? Describe your day <strong>from morning to evening</strong>.',
-                textPlain: 'What do you do every day? Tell me about your daily routine.',
-                audioPlain: 'What did you do yesterday? Describe your day from morning to evening.'
+                type: 'text',
+                step: 1,
+                textQuestion: "What do you do <strong class='highlight'>every day/strong>? Tell me about your <strong class='highlight'>daily routine.</strong>",
+                audioQuestion: null,
+                textPlain: "What do you do every day? Tell me about your daily routine.",
+                audioPlain: null
             },
+            // Paso 2: Grabación - 1
             {
-                emoji: '🔧',
-                textQuestion: 'Can you describe a challenging situation you <strong>faced</strong> at work or in your personal life? How did you <strong>handle</strong> it?',
-                audioQuestion: 'Tell me about a time when you <strong>had to learn</strong> something new quickly. What <strong>steps did you take</strong>?',
-                textPlain: 'Can you describe a challenging situation you faced at work or in your personal life? How did you handle it?',
-                audioPlain: 'Tell me about a time when you had to learn something new quickly. What steps did you take?'
+                type: 'audio',
+                step: 2,
+                textQuestion: null,
+                audioQuestion: "What did you do <strong class='highlight'>yesterday</strong>? Describe your day from morning to evening.",
+                textPlain: null,
+                audioPlain: "What did you do yesterday? Describe your day from morning to evening."
             },
+            // Paso 3: Escritura - 2
             {
-                emoji: '💡',
-                textQuestion: "What's your perspective on how technology is <strong>reshaping</strong> modern education? Do you think it's beneficial or does it present significant drawbacks?",
-                audioQuestion: 'If you <strong>could change</strong> one thing about how English is <strong>taught</strong>, what <strong>would it be</strong> and why?',
-                textPlain: "What's your perspective on how technology is reshaping modern education? Do you think it's beneficial or does it present significant drawbacks?",
-                audioPlain: 'If you could change one thing about how English is taught, what would it be and why?'
+                type: 'text',
+                step: 3,
+                textQuestion: "Can you describe a <strong class='highlight'>challenging situation</strong> you faced at school/work or in your personal life?",
+                audioQuestion: null,
+                textPlain: "Can you describe a challenging situation you faced at school/work or in your personal life?",
+                audioPlain: null
+            },
+            // Paso 4: Grabación - 2
+            {
+                type: 'audio',
+                step: 4,
+                textQuestion: null,
+                audioQuestion: "Tell me about your <strong class='highlight'>future plans</strong>. Where do you see yourself in 5 years? Describe your goals.",
+                textPlain: null,
+                audioPlain: "Tell me about your future plans. Where do you see yourself in 5 years? Describe your goals."
+            },
+            // Paso 5: Escritura - 3
+            {
+                type: 'text',
+                step: 5,
+                textQuestion: "If you could change one <strong class='highlight'>global problem</strong>, what would it be and why?",
+                audioQuestion: null,
+                textPlain: "If you could change one global problem, what would it be and why?",
+                audioPlain: null
+            },
+            // Paso 6: Grabación - 3 (Envío)
+            {
+                type: 'audio',
+                step: 6,
+                textQuestion: null,
+                audioQuestion: "Describe a <strong class='highlight'>recent trip</strong> or experience you had. What did you learn?",
+                textPlain: null,
+                audioPlain: "Describe a recent trip or experience you had. What did you learn?"
             }
         ];
 
-        // Variables globales
         let currentStep = 0;
         let responses = {
             text1: '', text2: '', text3: '',
             audio1: null, audio2: null, audio3: null
         };
-        let mediaRecorder = null;
-        let audioChunks = [];
-        let isRecording = false;
-        let currentAudio = null;
-        let currentAudioPlaying = false;
+        let recorder = null;
+        let audioBlob = null;
+        let audioUrl = null;
+        let audioStream = null;
 
-        // Inicializar al cargar
-        document.addEventListener('DOMContentLoaded', function() {
-            checkSystemStatus();
-            setupEventListeners();
-        });
-
-        // Configurar event listeners
-        function setupEventListeners() {
-            document.getElementById('startBtn').addEventListener('click', startTest);
-            document.getElementById('prevBtn').addEventListener('click', prevQuestion);
-            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
-            document.getElementById('floatCoachBtn').addEventListener('click', showCoachAccess);
-            document.getElementById('downloadBtn').addEventListener('click', downloadCoachResults);
-            document.getElementById('clearBtn').addEventListener('click', clearAndRelease);
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-        }
-
-        // Verificar estado del sistema
+        // --- FUNCIONES DE CONTROL DE ESTADO ---
+        
         function checkSystemStatus() {
-            const hasResults = sessionStorage.getItem('testResults');
+            const results = sessionStorage.getItem('testResults');
             const statusBadge = document.getElementById('statusBadge');
-            
-            if (hasResults) {
+            const startButton = document.getElementById('startButton');
+            const coachLogin = document.getElementById('coachLogin');
+            const testInstructions = document.getElementById('testInstructions');
+            const coachPanelSection = document.getElementById('coachPanelSection');
+
+            if (results) {
+                // Sistema Ocupado: Hay resultados pendientes
                 statusBadge.textContent = '● Ocupado';
                 statusBadge.className = 'status-badge status-occupied';
-                document.getElementById('instructionsSection').classList.add('hidden');
-                document.getElementById('blockedSection').classList.remove('hidden');
+                startButton.classList.add('hidden');
+                coachLogin.classList.remove('hidden');
+                testInstructions.textContent = 'El sistema está ocupado. Accede como Coach para descargar o liberar los resultados.';
+                coachPanelSection.classList.remove('hidden'); // Mostrar panel para descargar
             } else {
+                // Sistema Disponible: Listo para empezar
                 statusBadge.textContent = '● Disponível';
                 statusBadge.className = 'status-badge status-available';
-                document.getElementById('blockedSection').classList.add('hidden');
-                document.getElementById('instructionsSection').classList.remove('hidden');
+                startButton.classList.remove('hidden');
+                coachLogin.classList.add('hidden');
+                testInstructions.textContent = '¡El sistema está libre! Puedes comenzar el test.';
+                coachPanelSection.classList.add('hidden'); // Ocultar panel de coach
+            }
+        }
+        
+        function loginCoach() {
+            const password = document.getElementById('coachPassword').value;
+            if (password === COACH_PASSWORD) {
+                document.getElementById('coachLogin').classList.add('hidden');
+                document.getElementById('coachPanelSection').classList.remove('hidden');
+                alert('Acceso de Coach exitoso.');
+            } else {
+                alert('Contraseña incorrecta.');
             }
         }
 
-        // Iniciar test
+        // --- FUNCIONES DE NAVEGACIÓN Y VISTA ---
+        
         function startTest() {
-            const hasResults = sessionStorage.getItem('testResults');
-            if (hasResults) {
-                alert('❌ Sistema ocupado. Aguarde a coach liberar o sistema.');
+            if (sessionStorage.getItem('testResults')) {
+                alert('El sistema está ocupado. Un Coach debe liberar los resultados anteriores.');
                 return;
             }
             
-            document.getElementById('instructionsSection').classList.add('hidden');
-            document.getElementById('progressBar').classList.remove('hidden');
+            document.getElementById('statusSection').classList.add('hidden');
             document.getElementById('questionSection').classList.remove('hidden');
-            
-            loadQuestion();
+            currentStep = 1;
+            loadStep(currentStep);
         }
 
-        // Cargar pregunta
-        function loadQuestion() {
-            const question = questions[currentStep];
-            
-            document.getElementById('questionNumber').textContent = `Question ${currentStep + 1} of 3`;
-            document.getElementById('textQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.textQuestion}`;
-            document.getElementById('audioQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.audioQuestion}`;
-            document.getElementById('textAnswer').value = responses[`text${currentStep + 1}`] || '';
-            
+        function loadStep(step) {
+            const q = questions.find(q => q.step === step);
+            if (!q) return;
+
+            // Guardar respuesta del paso anterior antes de cargar el nuevo
+            saveCurrentResponse(); 
+
+            // Actualizar vista
+            document.getElementById('stepTitle').textContent = `Paso ${step} de ${questions.length}`;
             updateProgressBar();
-            updateButtons();
-            loadAudioControls();
-        }
-
-        // Actualizar barra de progreso
-        function updateProgressBar() {
-            const progress = ((currentStep + 1) / 3) * 100;
-            document.getElementById('progressBarFill').style.width = progress + '%';
-        }
-
-        // Actualizar botones
-        function updateButtons() {
-            document.getElementById('prevBtn').disabled = currentStep === 0;
-            document.getElementById('nextBtn').textContent = currentStep === 2 ? 'Enviar Teste ✓' : 'Próxima →';
-        }
-
-        // Cargar controles de audio
-        function loadAudioControls() {
-            const audioKey = `audio${currentStep + 1}`;
-            const controls = document.getElementById('audioControls');
             
-            if (responses[audioKey]) {
-                controls.innerHTML = `
-                    <div class="audio-player">
-                        <button class="audio-play-btn" id="playBtn">▶</button>
-                        <span>Áudio gravado</span>
-                        <button class="btn-rerecord" id="rerecordBtn">Regravar</button>
-                    </div>
-                `;
-                document.getElementById('playBtn').addEventListener('click', toggleAudioPlayback);
-                document.getElementById('rerecordBtn').addEventListener('click', deleteAudio);
-            } else {
-                controls.innerHTML = '<button class="btn btn-record" id="recordBtn">🎤 Gravar Áudio</button>';
-                document.getElementById('recordBtn').addEventListener('click', toggleRecording);
-            }
-        }
+            // Ocultar todos los modos
+            document.getElementById('textResponse').classList.add('hidden');
+            document.getElementById('audioControls').classList.add('hidden');
+            document.getElementById('submitButton').classList.add('hidden');
 
-        // Toggle recording
-        async function toggleRecording() {
-            if (isRecording) {
-                stopRecording();
-            } else {
-                await startRecording();
-            }
-        }
+            // Cargar contenido y controles
+            document.getElementById('currentQuestionText').innerHTML = q.textQuestion || q.audioQuestion;
 
-        // Iniciar grabación
-        async function startRecording() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    audio: {
-                        echoCancellation: true,
-                        noiseSuppression: true,
-                        autoGainControl: true
-                    } 
-                });
+            if (q.type === 'text') {
+                // Modo Escritura
+                document.getElementById('textResponse').classList.remove('hidden');
+                const responseKey = `text${Math.ceil(step / 2)}`;
+                document.getElementById('textResponse').value = responses[responseKey] || '';
+            } else if (q.type === 'audio') {
+                // Modo Grabación
+                document.getElementById('audioControls').classList.remove('hidden');
+                const responseKey = `audio${step / 2}`;
                 
-                let mimeType = 'audio/webm';
-                if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-                    mimeType = 'audio/webm;codecs=opus';
-                } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {mimeType = 'audio/ogg;codecs=opus';
-                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-                    mimeType = 'audio/mp4';
+                // Mostrar controles de reproducción si hay un blob guardado
+                if (responses[responseKey]) {
+                    showPlaybackControls(responses[responseKey]);
+                } else {
+                    hidePlaybackControls();
                 }
-                
-                mediaRecorder = new MediaRecorder(stream, { mimeType });
-                audioChunks = [];
-                
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        audioChunks.push(event.data);
-                    }
-                };
-                
-                mediaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: mimeType });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    responses[`audio${currentStep + 1}`] = {
-                        url: audioUrl,
-                        blob: audioBlob,
-                        mimeType: mimeType
-                    };
-                    stream.getTracks().forEach(track => track.stop());
-                    loadAudioControls();
-                };
-                
-                mediaRecorder.start();
-                isRecording = true;
-                
-                document.getElementById('recordBtn').innerHTML = '⏹ Parar Gravação';
-                document.getElementById('recordBtn').className = 'btn btn-recording';
-            } catch (err) {
-                console.error('Erro ao acessar microfone:', err);
-                alert('Erro ao acessar o microfone. Por favor, verifique as permissões do navegador e tente novamente.');
             }
-        }
 
-        // Detener grabación
-        function stopRecording() {
-            if (mediaRecorder && isRecording) {
-                mediaRecorder.stop();
-                isRecording = false;
-            }
-        }
-
-        // Toggle audio playback
-        function toggleAudioPlayback() {
-            const audioData = responses[`audio${currentStep + 1}`];
-            if (!audioData) return;
+            // Lógica de botones de navegación
+            document.getElementById('prevButton').disabled = step <= 1;
+            const nextButton = document.getElementById('nextButton');
             
-            if (!currentAudio) {
-                currentAudio = new Audio(audioData.url);
-                currentAudio.onended = () => {
-                    currentAudioPlaying = false;
-                    document.getElementById('playBtn').textContent = '▶';
-                };
-            }
-            
-            if (currentAudioPlaying) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-                currentAudioPlaying = false;
-                document.getElementById('playBtn').textContent = '▶';
+            if (step === questions.length) {
+                nextButton.classList.add('hidden');
+                document.getElementById('submitButton').classList.remove('hidden');
             } else {
-                currentAudio.play();
-                currentAudioPlaying = true;
-                document.getElementById('playBtn').textContent = '⏸';
+                nextButton.classList.remove('hidden');
+                document.getElementById('submitButton').classList.add('hidden');
             }
-        }
-
-        // Eliminar audio
-        function deleteAudio() {
-            responses[`audio${currentStep + 1}`] = null;
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio = null;
-            }
-            currentAudioPlaying = false;
-            loadAudioControls();
-        }
-
-        // Guardar respuesta actual
-        function saveCurrentAnswer() {
-            responses[`text${currentStep + 1}`] = document.getElementById('textAnswer').value;
-        }
-
-        // Siguiente pregunta
-        function nextQuestion() {
-            saveCurrentAnswer();
             
-            if (currentStep === 2) {
-                submitTest();
-            } else {
+            checkNextButtonValidity(q);
+        }
+        
+        function saveCurrentResponse() {
+            const prevQ = questions.find(q => q.step === currentStep);
+            if (!prevQ) return;
+            
+            if (prevQ.type === 'text') {
+                const responseKey = `text${Math.ceil(currentStep / 2)}`;
+                responses[responseKey] = document.getElementById('textResponse').value.trim();
+            } else if (prevQ.type === 'audio') {
+                 // El audioBlob se guarda automáticamente en toggleRecording/stopRecording
+                 // responses[audioX] ya tiene el blob si se grabó
+            }
+        }
+        
+        function nextStep() {
+            saveCurrentResponse(); // Guardar el paso actual
+            
+            // Validar si la respuesta del paso actual está completa
+            const q = questions.find(q => q.step === currentStep);
+            if (q.type === 'text' && responses[`text${Math.ceil(currentStep / 2)}`] === '') {
+                alert('Por favor, completa la respuesta escrita antes de continuar.');
+                return;
+            }
+            const audioKey = `audio${currentStep / 2}`;
+            if (q.type === 'audio' && !responses[audioKey]) {
+                alert('Por favor, graba tu respuesta de audio antes de continuar.');
+                return;
+            }
+            
+            if (currentStep < questions.length) {
                 currentStep++;
-                loadQuestion();
+                loadStep(currentStep);
             }
         }
 
-        // Pregunta anterior
-        function prevQuestion() {
-            saveCurrentAnswer();
-            
-            if (currentStep > 0) {
+        function prevStep() {
+            saveCurrentResponse(); // Guardar el paso actual
+            if (currentStep > 1) {
                 currentStep--;
-                loadQuestion();
+                loadStep(currentStep);
             }
         }
 
-        // FUNCIÓN submitTest para FIREBASE STORAGE (CORREGIDA)
-        function submitTest() {
-            saveCurrentAnswer();
+        function checkNextButtonValidity(q) {
+            // Lógica de validación del botón "Siguiente"
+            // Por simplicidad, aquí solo se valida si está activo, pero la validación real se hace en nextStep
+        }
+
+        function updateProgressBar() {
+            const progress = (currentStep / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+
+        // --- FUNCIONES DE GRABACIÓN ---
+        
+        function showPlaybackControls(blob) {
+            const url = URL.createObjectURL(blob);
+            document.getElementById('audioPlayback').src = url;
+            document.getElementById('playbackSection').classList.remove('hidden');
+            document.getElementById('recordButton').disabled = false;
+            document.getElementById('recordText').textContent = '🎙️ Volver a Grabar';
+        }
+        
+        function hidePlaybackControls() {
+            document.getElementById('playbackSection').classList.add('hidden');
+            document.getElementById('audioPlayback').src = '';
+            document.getElementById('recordText').textContent = '🎙️ Grabar Respuesta';
             
-            // 1. Preparar datos de texto para sessionStorage
+            const audioKey = `audio${currentStep / 2}`;
+            responses[audioKey] = null; // Borrar el blob guardado
+        }
+        
+        function discardRecording() {
+            audioBlob = null;
+            hidePlaybackControls();
+        }
+
+        async function toggleRecording() {
+            if (recorder && recorder.state === 'recording') {
+                // DETENER GRABACIÓN
+                recorder.stop();
+                document.getElementById('recordingStatus').classList.add('hidden');
+                document.getElementById('recordButton').disabled = true; // Deshabilitar mientras se procesa
+            } else {
+                // INICIAR GRABACIÓN
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                recorder = new MediaRecorder(audioStream);
+                const audioChunks = [];
+
+                recorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+
+                recorder.onstop = () => {
+                    audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    
+                    const audioKey = `audio${currentStep / 2}`;
+                    responses[audioKey] = audioBlob; // Guardar el blob en las respuestas
+                    
+                    showPlaybackControls(audioBlob);
+                    audioStream.getTracks().forEach(track => track.stop()); // Detener la cámara/micrófono
+                };
+
+                recorder.start();
+                document.getElementById('recordingStatus').classList.remove('hidden');
+                document.getElementById('recordText').textContent = '⏹️ Detener Grabación';
+            }
+        }
+
+        // --- FUNCIÓN DE ENVÍO FINAL ---
+
+        async function submitTest() {
+            saveCurrentResponse(); // Guardar la respuesta final
+
+            // Validar la última respuesta
+            const q = questions.find(q => q.step === currentStep);
+            const audioKey = `audio${currentStep / 2}`;
+            if (!responses[audioKey]) {
+                alert('Por favor, graba tu respuesta final antes de enviar.');
+                return;
+            }
+            
+            document.getElementById('submitButton').disabled = true;
+            document.getElementById('submitButton').textContent = 'Enviando...';
+
+            const email = prompt("Por favor, introduce tu email (para seguimiento de resultados):");
+            if (!email) {
+                alert("Email es requerido para enviar el test.");
+                document.getElementById('submitButton').disabled = false;
+                document.getElementById('submitButton').textContent = 'Enviar Test';
+                return;
+            }
+
+            // 1. Preparar datos y promesas de subida
             const textOnlyData = {
+                email: email,
                 timestamp: new Date().toISOString(),
-                responses: {
-                    text1: responses.text1,
-                    text2: responses.text2,
-                    text3: responses.text3,
-                    // Solo indicamos si hay audio
-                    audio1: responses.audio1 ? true : false, 
-                    audio2: responses.audio2 ? true : false,
-                    audio3: responses.audio3 ? true : false
-                }
+                urls: {} // Aquí guardaremos las URLs de Firebase Storage
             };
-            
+
             const uploadPromises = [];
-            const dateStamp = new Date().getTime();
+            let audioCount = 0;
 
-            // 2. Subir cada audio a Firebase Storage
-            [1, 2, 3].forEach(num => {
-                const audioData = responses[`audio${num}`];
-                if (audioData && audioData.blob) {
-                    
-                    // Nombre único: timestamp_Qx.webm
-                    const uniqueFileName = `${dateStamp}_Q${num}.${audioData.mimeType.split('/')[1].split(';')[0]}`;
-                    
-                    // Referencia a Storage (carpeta /audios)
-                    const storageRef = storage.ref(`audios/${uniqueFileName}`);
-                    
-                    // Subir la Blob
-                    const uploadTask = storageRef.put(audioData.blob);
+            for (let i = 1; i <= 3; i++) {
+                // A. Respuestas de Texto
+                textOnlyData[`text${i}`] = responses[`text${i}`] || 'No respondido';
 
-                    uploadPromises.push(
-                        new Promise((resolve, reject) => {
-                            uploadTask.on('state_changed', 
-                                // Sin seguimiento de progreso
-                                () => {}, 
-                                // Manejo de error (CORREGIDO: Ahora usamos reject y alerta de reglas)
-                                (error) => {
-                                    console.error(`Error al subir audio Q${num}:`, error);
-                                    
-                                    if (error.code === 'storage/unauthorized') {
-                                        alert(`❌ ERROR DE FIREBASE: Permiso de subida denegado (storage/unauthorized). Por favor, VERIFICA las Reglas de Seguridad de Firebase Storage (deben ser 'allow read, write: if true;').`);
-                                    } else {
-                                        alert(`❌ Error de Firebase al subir audio Q${num}: ${error.code}.`);
-                                    }
-                                    
-                                    reject(error); // Rechazamos la promesa para forzar el fallo de Promise.all
-                                }, 
-                                // Subida completada
-                                () => {
-                                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                                        // Guardamos la URL de descarga para el coach
-                                        textOnlyData.responses[`audio${num}URL`] = downloadURL;
-                                        resolve(downloadURL); // Resolvemos (éxito)
-                                    });
-                                }
-                            );
-                        })
-                    );
+                // B. Subida de Audios
+                const blob = responses[`audio${i}`];
+                if (blob) {
+                    audioCount++;
+                    const audioFileName = `${email.split('@')[0]}_audio${i}_${Date.now()}.webm`;
+                    const storageRef = storage.ref().child(`yfi_tests/${audioFileName}`);
+                    
+                    const uploadTask = storageRef.put(blob);
+                    
+                    // Añadir promesa para obtener la URL de descarga
+                    const urlPromise = new Promise((resolve, reject) => {
+                        uploadTask.on('state_changed', 
+                            (snapshot) => {
+                                // Puedes implementar un feedback de progreso aquí si es necesario
+                                console.log(`Progreso de Audio ${i}:`, (snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                            }, 
+                            (error) => {
+                                reject(error);
+                            }, 
+                            () => {
+                                // Éxito: obtener URL de descarga
+                                storageRef.getDownloadURL().then(url => {
+                                    textOnlyData.urls[`audio${i}_url`] = url;
+                                    resolve();
+                                }).catch(reject);
+                            }
+                        );
+                    });
+                    uploadPromises.push(urlPromise);
                 }
-            });
-            
-            // 3. Esperar a que todos los audios terminen de subir (o que uno falle)
+            }
+
+            // 2. Ejecutar todas las subidas y la llamada al back-end
             Promise.all(uploadPromises)
                 .then(() => {
-                    // ÉXITO: Todos los audios subieron correctamente
+                    // ÉXITO: Todos los audios subieron correctamente y las URLs están en textOnlyData
                     sessionStorage.setItem('testResults', JSON.stringify(textOnlyData)); 
-                    
+
+                    // 🚨 NUEVO PASO: ENVÍA LOS RESULTADOS AL BACKEND PERMANENTE (VÍA FIREBASE PROXY)
+                    return fetch(FIREBASE_FUNCTION_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        // Enviamos todos los datos (incluyendo las URLs de Storage)
+                        body: JSON.stringify({ 
+                            action: 'saveTestResults', 
+                            data: textOnlyData 
+                        }), 
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                             throw new Error('El backend (GAS) respondió con un error: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(backendData => {
+                        console.log("Datos enviados al backend (GAS) con éxito:", backendData);
+                    })
+                    .catch(error => {
+                        console.error("Fallo al enviar datos al GAS/Airtable:", error);
+                        alert("⚠️ Alerta: Los audios se subieron, pero falló el envío de los datos de texto al sistema de Airtable. Revisa la consola.");
+                    });
+                })
+                .then(() => {
+                    // Este es el .then() que maneja la finalización de la subida Y la llamada a fetch
                     document.getElementById('questionSection').classList.add('hidden');
                     document.getElementById('progressBar').classList.add('hidden');
                     document.getElementById('successScreen').classList.remove('hidden');
@@ -993,89 +733,56 @@
                     statusBadge.textContent = '● Ocupado';
                     statusBadge.className = 'status-badge status-occupied';
                     
-                    alert("¡Test enviado con éxito! Audios subidos a Firebase Storage.");
+                    alert("¡Test enviado con éxito! Respuestas y audios guardados.");
                 })
                 .catch(error => {
-                    // FALLO: Al menos una subida falló (la alerta ya se mostró en el paso 2)
-                    console.error("Fallo general en la subida de audios. El test NO fue guardado.", error);
-                    // No damos un mensaje extra, el usuario ya vio el error específico de Firebase.
+                    // Manejo de errores si falló la subida de audios o la conexión inicial
+                    console.error("Error crítico durante la subida de audios o conexión al proxy:", error);
+                    alert("🚫 Error crítico. No se pudo completar el test. Detalles en la consola.");
+                })
+                .finally(() => {
+                    document.getElementById('submitButton').disabled = false;
+                    document.getElementById('submitButton').textContent = 'Enviar Test';
                 });
         }
-        // -----------------------------------------------------------------------
 
 
-        // Mostrar acceso coach
-        function showCoachAccess() {
-            const password = prompt('🔐 Acesso Coach\n\nDigite a senha:');
-            if (password === COACH_PASSWORD) {
-                hideAllSections();
-                document.getElementById('coachPanelSection').classList.remove('hidden');
-                
-                const hasResults = sessionStorage.getItem('testResults');
-                if (!hasResults) {
-                    document.getElementById('testInfo').textContent = 'Não há testes aguardando análise no momento. O sistema está livre para novos alunos.';
-                }
-            } else if (password !== null) {
-                alert('❌ Senha incorreta.');
-            }
-        }
+        // --- FUNCIONES DE COACH ---
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', checkSystemStatus);
 
-        // Ocultar todas las secciones
-        function hideAllSections() {
-            document.getElementById('instructionsSection').classList.add('hidden');
-            document.getElementById('blockedSection').classList.add('hidden');
-            document.getElementById('questionSection').classList.add('hidden');
-            document.getElementById('progressBar').classList.add('hidden');
-            document.getElementById('successScreen').classList.add('hidden');
-            document.getElementById('coachPanelSection').classList.add('hidden');
-        }
 
-        // Descargar resultados
-        function downloadCoachResults() {
-            const testData = JSON.parse(sessionStorage.getItem('testResults'));
-            if (!testData) {
-                alert('❌ Nenhum resultado encontrado.');
+        function downloadResults() {
+            const results = sessionStorage.getItem('testResults');
+            if (!results) {
+                alert('No hay resultados pendientes para descargar.');
                 return;
             }
+
+            const data = JSON.parse(results);
+            let textContent = `--- YFI PROFILE TEST RESULTS ---\n`;
+            textContent += `Email: ${data.email}\n`;
+            textContent += `Timestamp: ${data.timestamp}\n\n`;
+
+            textContent += `--- RESPUESTAS ESCRITAS ---\n`;
+            textContent += `1. ${data.text1}\n`;
+            textContent += `3. ${data.text2}\n`;
+            textContent += `5. ${data.text3}\n\n`;
             
-            const levels = ['A2', 'B1', 'B2'];
-            const date = new Date(testData.timestamp);
+            textContent += `--- URLs DE AUDIO ---\n`;
+            textContent += `Audio 2 URL: ${data.urls.audio2_url || 'No grabado'}\n`;
+            textContent += `Audio 4 URL: ${data.urls.audio4_url || 'No grabado'}\n`;
+            textContent += `Audio 6 URL: ${data.urls.audio6_url || 'No grabado'}\n\n`;
+
+            const blob = new Blob([textContent], { type: 'text/plain' });
+            const textUrl = URL.createObjectURL(blob);
             
-            let textContent = 'YFI PROFILE TEST - RESULTADOS PARA ANÁLISE HUMANIZADA\n';
-            textContent += '='.repeat(60) + '\n\n';
-            textContent += `Data: ${date.toLocaleString('pt-BR')}\n`;
-            textContent += `Timestamp: ${testData.timestamp}\n\n`;
-            textContent += 'INSTRUÇÕES PARA COACH:\n';
-            textContent += 'Analise as respostas escritas e orais para criar um perfil\n';
-            textContent += 'personalizado do nível de inglês do aluno.\n\n';
-            textContent += '='.repeat(60) + '\n\n';
-            
-            questions.forEach((q, i) => {
-                textContent += `\n--- PERGUNTA ${i + 1} (Nível ${levels[i]}) ---\n\n`;
-                textContent += `📝 PERGUNTA ESCRITA:\n${q.textPlain}\n\n`;
-                textContent += `RESPOSTA ESCRITA:\n${testData.responses[`text${i + 1}`] || '[Sem resposta]'}\n\n`;
-                
-                const audioStatus = testData.responses[`audio${i + 1}URL`] 
-                    ? `Áudio gravado. URL Firebase: ${testData.responses[`audio${i + 1}URL`]}` 
-                    : '[Sem áudio gravado]';
-                
-                textContent += `🎤 PERGUNTA ORAL:\n${q.audioPlain}\n\n`;
-                textContent += `RESPOSTA ORAL: ${audioStatus}\n\n`;
-                textContent += '='.repeat(60) + '\n';
-            });
-            
-            textContent += '\n\nNOTAS PARA ANÁLISE:\n';
-            textContent += '- Vocabulário utilizado\n';
-            textContent += '- Estruturas gramaticais\n';
-            textContent += '- Fluência e pronúncia (áudios)\n';
-            textContent += '- Coerencia y coesão\n';
-            textContent += '- Complexidade das respostas\n';
-            
-            const textBlob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-            const textUrl = URL.createObjectURL(textBlob);
             const textLink = document.createElement('a');
             textLink.href = textUrl;
-            textLink.download = `YFI_test_${date.getTime()}.txt`;
+            textLink.download = `YFI_Test_Results_${data.email.split('@')[0]}_${new Date().toLocaleDateString('es-AR').replace(/\//g, '-')}.txt`;
+            textLink.style.display = 'none';
+            document.body.appendChild(textLink);
             textLink.click();
             URL.revokeObjectURL(textUrl);
             
@@ -1087,7 +794,7 @@
 
         // Limpiar y liberar
         function clearAndRelease() {
-            if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado os resultados antes de continuar.')) {
+            if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado los resultados antes de continuar.')) {
                 sessionStorage.removeItem('testResults');
                 
                 currentStep = 0;
