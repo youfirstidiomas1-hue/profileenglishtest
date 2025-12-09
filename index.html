@@ -320,7 +320,7 @@
     <script>
         // 1. CONFIGURACIÓN Y CONEXIÓN A FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs",
+            apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs", // Tu clave API
             authDomain: "tests-data-55907.firebaseapp.com",
             projectId: "tests-data-55907",
             storageBucket: "tests-data-55907.appspot.com", // CORREGIDO: Usar appspot.com
@@ -332,7 +332,7 @@
         const app = firebase.initializeApp(firebaseConfig);
         const storage = app.storage(); // Referencia clave a Storage para subir audios
 
-        // 2. CONFIGURAÇÃO E VARIÁVEIS
+        // 2. CONFIGURACIÓN Y VARIABLES
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
         
         // 🚨 NUEVA URL DE FIREBASE CLOUD RUN (PROXY)
@@ -520,7 +520,6 @@
                 const responseKey = `text${Math.ceil(currentStep / 2)}`;
                 responses[responseKey] = document.getElementById('textResponse').value.trim();
             } else if (prevQ.type === 'audio') {
-                 // El audioBlob se guarda automáticamente en toggleRecording/stopRecording
                  // responses[audioX] ya tiene el blob si se grabó
             }
         }
@@ -556,7 +555,6 @@
 
         function checkNextButtonValidity(q) {
             // Lógica de validación del botón "Siguiente"
-            // Por simplicidad, aquí solo se valida si está activo, pero la validación real se hace en nextStep
         }
 
         function updateProgressBar() {
@@ -794,7 +792,7 @@
 
         // Limpiar y liberar
         function clearAndRelease() {
-            if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado los resultados antes de continuar.')) {
+            if (confirm('⚠️ Tem certeza que deseja limpiar los resultados y liberar el sistema?\n\nEsta acción no puede ser deshecha. Asegúrate de haber descargado los resultados antes de continuar.')) {
                 sessionStorage.removeItem('testResults');
                 
                 currentStep = 0;
@@ -807,7 +805,7 @@
                 statusBadge.textContent = '● Disponível';
                 statusBadge.className = 'status-badge status-available';
                 
-                alert('✓ Sistema liberado com sucesso!\n\nO próximo aluno já pode fazer o teste.');
+                alert('✓ Sistema liberado con éxito!\n\nEl próximo alumno ya puede hacer el test.');
                 
                 logout();
             }
