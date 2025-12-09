@@ -637,13 +637,13 @@
             apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs", // Tu clave API
             authDomain: "tests-data-55907.firebaseapp.com",
             projectId: "tests-data-55907",
-            storageBucket: "tests-data-55907.appspot.com", // CORREGIDO: Usar el formato estándar [project-id].appspot.com
+            storageBucket: "tests-data-55907.appspot.com", 
             messagingSenderId: "98761713852",
             appId: "1:98761713852:web:82ecbe775f1322ba0248b9"
         };
 
         const app = firebase.initializeApp(firebaseConfig);
-        const storage = app.storage(); // Referencia clave a Storage para subir audios
+        const storage = app.storage(); 
 
         // 2. CONFIGURACIÓN Y VARIABLES
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
@@ -674,7 +674,7 @@
         ];
 
         // Variables globales
-        let currentStep = 0;
+        let currentStep = 0; // 0-indexed: 0, 1, 2
         let responses = {
             text1: '', text2: '', text3: '',
             audio1: null, audio2: null, audio3: null
@@ -695,7 +695,8 @@
         function setupEventListeners() {
             document.getElementById('startBtn').addEventListener('click', startTest);
             document.getElementById('prevBtn').addEventListener('click', prevQuestion);
-            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            // CRÍTICO: Aquí está el listener para el botón "Próxima/Enviar Teste"
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion); 
             document.getElementById('floatCoachBtn').addEventListener('click', showCoachAccess);
             document.getElementById('downloadBtn').addEventListener('click', downloadCoachResults);
             document.getElementById('clearBtn').addEventListener('click', clearAndRelease);
@@ -732,6 +733,7 @@
             document.getElementById('progressBar').classList.remove('hidden');
             document.getElementById('questionSection').classList.remove('hidden');
             
+            currentStep = 0; // Reiniciar paso
             loadQuestion();
         }
 
@@ -742,7 +744,10 @@
             document.getElementById('questionNumber').textContent = `Question ${currentStep + 1} of 3`;
             document.getElementById('textQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.textQuestion}`;
             document.getElementById('audioQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.audioQuestion}`;
-            document.getElementById('textAnswer').value = responses[`text${currentStep + 1}`] || '';
+            
+            // Usar currentStep + 1 para el índice de respuesta (1, 2 o 3)
+            const currentQIndex = currentStep + 1;
+            document.getElementById('textAnswer').value = responses[`text${currentQIndex}`] || '';
             
             updateProgressBar();
             updateButtons();
@@ -821,13 +826,18 @@
                 
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: mimeType });
+                    
+                    // Detener todos los tracks del stream para liberar el micrófono
+                    stream.getTracks().forEach(track => track.stop()); 
+
                     const audioUrl = URL.createObjectURL(audioBlob);
+                    // CRÍTICO: Guardar el BLOB, no solo la URL, para la subida.
                     responses[`audio${currentStep + 1}`] = {
                         url: audioUrl,
                         blob: audioBlob,
                         mimeType: mimeType
                     };
-                    stream.getTracks().forEach(track => track.stop());
+                    
                     loadAudioControls();
                 };
                 
@@ -847,6 +857,7 @@
             if (mediaRecorder && isRecording) {
                 mediaRecorder.stop();
                 isRecording = false;
+                // El onstop de mediaRecorder se encargará de guardar y actualizar controles
             }
         }
 
@@ -891,13 +902,29 @@
             responses[`text${currentStep + 1}`] = document.getElementById('textAnswer').value;
         }
 
-        // Siguiente pregunta
+        // Siguiente pregunta (o Enviar Test)
         function nextQuestion() {
             saveCurrentAnswer();
             
+            const currentQIndex = currentStep + 1;
+            const textResponse = responses[`text${currentQIndex}`].trim();
+            const audioData = responses[`audio${currentQIndex}`];
+
+            // 🛑 VALIDACIÓN CRÍTICA: Asegurar que ambas respuestas existan antes de avanzar/enviar
+            if (textResponse === '') {
+                alert('❌ Por favor, preencha a resposta escrita antes de continuar.');
+                return;
+            }
+            if (!audioData || !audioData.blob) {
+                alert('❌ Por favor, grave a resposta de áudio antes de continuar.');
+                return;
+            }
+            
             if (currentStep === 2) {
+                // Si la validación pasa en el último paso, enviar.
                 submitTest();
             } else {
+                // Si la validación pasa, avanzar al siguiente paso.
                 currentStep++;
                 loadQuestion();
             }
@@ -915,8 +942,10 @@
 
         // FUNCIÓN submitTest para FIREBASE STORAGE
         function submitTest() {
-            saveCurrentAnswer();
-            
+            // Deshabilitar botón para evitar doble click
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('nextBtn').textContent = 'Enviando...';
+
             // 1. Preparar datos de texto para sessionStorage
             const textOnlyData = {
                 timestamp: new Date().toISOString(),
@@ -924,7 +953,7 @@
                     text1: responses.text1,
                     text2: responses.text2,
                     text3: responses.text3,
-                    // Solo indicamos si hay audio
+                    // Estos serán reemplazados por las URLs reales
                     audio1: responses.audio1 ? true : false, 
                     audio2: responses.audio2 ? true : false,
                     audio3: responses.audio3 ? true : false
@@ -939,39 +968,30 @@
                 const audioData = responses[`audio${num}`];
                 if (audioData && audioData.blob) {
                     
-                    // Nombre único: timestamp_Qx.webm (o el formato de audio real)
                     const uniqueFileName = `${dateStamp}_Q${num}.${audioData.mimeType.split('/')[1].split(';')[0]}`;
-                    
-                    // Referencia a Storage (carpeta /audios)
                     const storageRef = storage.ref(`audios/${uniqueFileName}`);
-                    
-                    // Subir la Blob
                     const uploadTask = storageRef.put(audioData.blob);
 
                     uploadPromises.push(
                         new Promise((resolve, reject) => {
                             uploadTask.on('state_changed', 
-                                // Sin seguimiento de progreso
-                                () => {}, 
-                                // Manejo de error
+                                () => {}, // Progreso
                                 (error) => {
+                                    // Manejo de error de subida
                                     console.error(`Error al subir audio Q${num}:`, error);
-                                    
                                     if (error.code === 'storage/unauthorized') {
-                                        alert(`❌ ERROR DE FIREBASE: Permiso de subida denegado (storage/unauthorized). Por favor, VERIFICA las Reglas de Seguridad de Firebase Storage (deben ser 'allow read, write: if true;').`);
+                                        alert(`❌ ERROR DE FIREBASE: Permiso de subida denegado. VERIFIQUE las Reglas de Seguridad de Firebase Storage (deben ser 'allow read, write: if true;').`);
                                     } else {
                                         alert(`❌ Error de Firebase al subir audio Q${num}: ${error.code}.`);
                                     }
-                                    
-                                    reject(error); // Rechazamos la promesa para forzar el fallo de Promise.all
+                                    reject(error); 
                                 }, 
-                                // Subida completada
                                 () => {
+                                    // Subida completada
                                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                                        // Guardamos la URL de descarga para el coach
                                         textOnlyData.responses[`audio${num}URL`] = downloadURL;
-                                        resolve(downloadURL); // Resolvemos (éxito)
-                                    });
+                                        resolve(downloadURL); 
+                                    }).catch(reject);
                                 }
                             );
                         })
@@ -982,7 +1002,7 @@
             // 3. Esperar a que todos los audios terminen de subir (o que uno falle)
             Promise.all(uploadPromises)
                 .then(() => {
-                    // ÉXITO: Todos los audios subieron correctamente
+                    // ÉXITO: Todos los audios subieron (o no había ninguno para subir, pero la validación ya lo evitó).
                     sessionStorage.setItem('testResults', JSON.stringify(textOnlyData)); 
                     
                     document.getElementById('questionSection').classList.add('hidden');
@@ -996,12 +1016,16 @@
                     alert("¡Test enviado con éxito! Audios subidos a Firebase Storage.");
                 })
                 .catch(error => {
-                    // FALLO: Al menos una subida falló (la alerta ya se mostró en el paso 2)
+                    // Fallo: error de Firebase ya manejado en el paso 2
                     console.error("Fallo general en la subida de audios. El test NO fue guardado.", error);
-                    // No damos un mensaje extra, el usuario ya vio el error específico de Firebase.
+                    alert("🚫 Error crítico en la subida. Verifique la consola para detalles. Intente nuevamente.");
+                })
+                .finally(() => {
+                    // Resetear el botón si algo falló.
+                    document.getElementById('nextBtn').disabled = false;
+                    document.getElementById('nextBtn').textContent = 'Enviar Teste ✓'; 
                 });
         }
-        // -----------------------------------------------------------------------
 
 
         // Mostrar acceso coach
