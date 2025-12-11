@@ -629,12 +629,12 @@
     </div>
 
     <script>
-        // 1. CONFIGURACIÓN DEL SERVICIO GOOGLE APPS SCRIPT
+        // 1. CONFIGURAÇÃO DEL SERVICIO GOOGLE APPS SCRIPT
         // 🛑 IMPORTANTE: PEGA AQUÍ LA URL DE DESPLIEGUE DE TU SCRIPT DE GOOGLE APPS SCRIPT (GAS)
         // (Por ejemplo: https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzz/exec)
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyl67t97t1N4KaPF9muBCqusEPXw07qWeqQMiz9ulMxBMPGQBM3JEHeCA6u-8jg2d0bTQ/exec'; 
+        const GAS_WEB_APP_URL = 'URL_DEL_SCRIPT_AQUI'; 
         
-        // 2. CONFIGURACIÓN Y VARIABLES
+        // 2. CONFIGURAÇÃO Y VARIABLES
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
                 
         // Preguntas
@@ -844,7 +844,7 @@
         function stopRecording() {
             if (mediaRecorder && isRecording) {
                 mediaRecorder.stop();
-                isRecording = false;
+                // No es necesario detener el stream aquí, mediaRecorder.onstop lo maneja
             }
         }
 
@@ -929,7 +929,7 @@
 
         // FUNCIÓN submitTest para GOOGLE APPS SCRIPT (GAS)
         async function submitTest() {
-            if (GAS_WEB_APP_URL === 'URL_DEL_SCRIPT_AQUI') {
+            if (GAS_WEB_APP_URL === 'https://script.google.com/macros/s/AKfycbzfX8PEnJZysOrmNzh7RKpT00L885vHbj9RQTFVeUTxjEpWU1fDKixcEvmLw0G6GZDFpw/exec') {
                 alert('❌ ERROR DE CONFIGURACIÓN: Por favor, pega la URL de tu Google Apps Script en la variable GAS_WEB_APP_URL.');
                 return;
             }
@@ -953,7 +953,16 @@
                 
                 // Archivos de audio (Blobs)
                 if (audioData && audioData.blob) {
-                    const fileName = `YFI_Q${i}_${dateStamp}.${audioData.mimeType.split('/')[1].split(';')[0]}`;
+                    
+                    // 🛑 CÓDIGO CORREGIDO Y SEGURO: Usamos una extensión fija para evitar errores de sintaxis en el nombre del archivo
+                    let extension = 'webm';
+                    if (audioData.mimeType.includes('mp4')) {
+                        extension = 'mp4';
+                    } else if (audioData.mimeType.includes('ogg')) {
+                        extension = 'ogg';
+                    } 
+                    
+                    const fileName = `YFI_Q${i}_${dateStamp}.${extension}`;
                     // Adjuntar el blob con un nombre de archivo
                     formData.append(`audioFile${i}`, audioData.blob, fileName);
                 }
@@ -963,21 +972,30 @@
             try {
                 const response = await fetch(GAS_WEB_APP_URL, {
                     method: 'POST',
-                    body: formData, // fetch maneja automáticamente el Content-Type: multipart/form-data
-                    // Es CRÍTICO que aquí NO se envíe ningún header Content-Type
+                    body: formData, 
+                    // No enviar Content-Type. 'fetch' lo hace automáticamente con FormData.
                 });
 
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);
                 }
                 
-                const result = await response.json();
+                // 🛑 CRÍTICO: Leer el texto de la respuesta primero en caso de que no sea JSON válido (para evitar el error 'null')
+                const responseText = await response.text(); 
                 
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (e) {
+                    // Si el servidor GAS no devuelve JSON válido, es un error interno del script
+                    throw new Error(`GAS no devolvió JSON válido. Respuesta: ${responseText.substring(0, 100)}...`);
+                }
+
                 if (result.status !== 'success') {
                     throw new Error(`Fallo en GAS: ${result.message || 'Error desconocido'}`);
                 }
 
-                // ÉXITO: Los audios fueron subidos a Drive y el log a Google Sheet
+                // ÉXITO
                 sessionStorage.setItem('testResults', JSON.stringify({ 
                     timestamp: new Date().toISOString(), 
                     message: 'Test enviado a Google Apps Script/Drive' 
