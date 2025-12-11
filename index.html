@@ -579,7 +579,7 @@
         <div id="successScreen" class="success-screen hidden">
             <div class="success-icon">✓</div>
             <h2>Teste Concluído!</h2>
-            <p>Obrigado por completar o teste de perfil.<br/>Suas respostas foram salvas temporariamente e serão analisadas pela sua coach.</p>
+            <p>Obrigado por completar o teste de perfil.<br/>Suas respostas foram salvas e enviadas à sua coach.</p>
             
             <div class="info-box" style="text-align: left;">
                 <h3>📋 Próximos Passos</h3>
@@ -611,7 +611,7 @@
             
             <div class="coach-actions">
                 <button class="btn btn-primary" id="downloadBtn" style="flex: 1;">
-                    📥 Baixar Resultados
+                    ❌ Removido (Usar Google Sheet)
                 </button>
                 <button class="btn btn-danger" id="clearBtn" style="flex: 1;">
                     🔓 Limpar e Liberar Sistema
@@ -628,23 +628,12 @@
         </button>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
-    
     <script>
-        // 1. CONFIGURACIÓN Y CONEXIÓN A FIREBASE
-        const firebaseConfig = {
-            apiKey: "AIzaSyCpx81xNSOOQTm_XiwwB452gqQegL6THVs", // Tu clave API
-            authDomain: "tests-data-55907.firebaseapp.com",
-            projectId: "tests-data-55907",
-            storageBucket: "tests-data-55907.appspot.com", 
-            messagingSenderId: "98761713852",
-            appId: "1:98761713852:web:82ecbe775f1322ba0248b9"
-        };
-
-        const app = firebase.initializeApp(firebaseConfig);
-        const storage = app.storage(); 
-
+        // 1. CONFIGURACIÓN DEL SERVICIO GOOGLE APPS SCRIPT
+        // 🛑 IMPORTANTE: PEGA AQUÍ LA URL DE DESPLIEGUE DE TU SCRIPT DE GOOGLE APPS SCRIPT (GAS)
+        // (Por ejemplo: https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzz/exec)
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzjdZmMy5mtP5mUQrY2isOS83LlsHT4GdaISNFvdq15fh9N1vFey-rk2bsT23YK59j6og/exec'; 
+        
         // 2. CONFIGURACIÓN Y VARIABLES
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
                 
@@ -695,10 +684,9 @@
         function setupEventListeners() {
             document.getElementById('startBtn').addEventListener('click', startTest);
             document.getElementById('prevBtn').addEventListener('click', prevQuestion);
-            // CRÍTICO: Aquí está el listener para el botón "Próxima/Enviar Teste"
             document.getElementById('nextBtn').addEventListener('click', nextQuestion); 
             document.getElementById('floatCoachBtn').addEventListener('click', showCoachAccess);
-            document.getElementById('downloadBtn').addEventListener('click', downloadCoachResults);
+            // downloadBtn ya no es funcional con GAS, ya que los datos están en Google Sheet
             document.getElementById('clearBtn').addEventListener('click', clearAndRelease);
             document.getElementById('logoutBtn').addEventListener('click', logout);
         }
@@ -824,11 +812,11 @@
                     }
                 };
                 
-                // 🛑 CORRECCIÓN: Asegurar que el stream se detenga solo después de crear el Blob.
+                // 🛑 Asegurar que el stream se detenga solo después de crear el Blob.
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: mimeType });
                     
-                    // Detener todos los tracks del stream para liberar el micrófono. ESTO DEBE IR AQUÍ.
+                    // Detener todos los tracks del stream para liberar el micrófono.
                     stream.getTracks().forEach(track => track.stop()); 
 
                     const audioUrl = URL.createObjectURL(audioBlob);
@@ -857,7 +845,6 @@
             if (mediaRecorder && isRecording) {
                 mediaRecorder.stop();
                 isRecording = false;
-                // El onstop de mediaRecorder se encargará de guardar y actualizar controles
             }
         }
 
@@ -940,91 +927,80 @@
             }
         }
 
-        // FUNCIÓN submitTest para FIREBASE STORAGE
-        function submitTest() {
+        // FUNCIÓN submitTest para GOOGLE APPS SCRIPT (GAS)
+        async function submitTest() {
+            if (GAS_WEB_APP_URL === 'URL_DEL_SCRIPT_AQUI') {
+                alert('❌ ERROR DE CONFIGURACIÓN: Por favor, pega la URL de tu Google Apps Script en la variable GAS_WEB_APP_URL.');
+                return;
+            }
+            
             // Deshabilitar botón para evitar doble click
             document.getElementById('nextBtn').disabled = true;
             document.getElementById('nextBtn').textContent = 'Enviando...';
 
-            // 1. Preparar datos de texto para sessionStorage
-            const textOnlyData = {
-                timestamp: new Date().toISOString(),
-                responses: {
-                    text1: responses.text1,
-                    text2: responses.text2,
-                    text3: responses.text3,
-                    // Estos serán reemplazados por las URLs reales
-                    audio1: responses.audio1 ? true : false, 
-                    audio2: responses.audio2 ? true : false,
-                    audio3: responses.audio3 ? true : false
-                }
-            };
-            
-            const uploadPromises = [];
+            const formData = new FormData();
             const dateStamp = new Date().getTime();
 
-            // 2. Subir cada audio a Firebase Storage
-            [1, 2, 3].forEach(num => {
-                const audioData = responses[`audio${num}`];
+            // 1. Recopilar datos de texto y audio para FormData
+            for (let i = 1; i <= 3; i++) {
+                const qIndex = i - 1;
+                const audioData = responses[`audio${i}`];
+                
+                // Datos de texto (Preguntas y Respuestas Escritas)
+                formData.append(`textAnswer${i}`, responses[`text${i}`]);
+                formData.append(`textQuestion${i}`, questions[qIndex].textPlain);
+                formData.append(`audioQuestion${i}`, questions[qIndex].audioPlain);
+                
+                // Archivos de audio (Blobs)
                 if (audioData && audioData.blob) {
-                    
-                    const uniqueFileName = `${dateStamp}_Q${num}.${audioData.mimeType.split('/')[1].split(';')[0]}`;
-                    const storageRef = storage.ref(`audios/${uniqueFileName}`);
-                    const uploadTask = storageRef.put(audioData.blob);
-
-                    uploadPromises.push(
-                        new Promise((resolve, reject) => {
-                            uploadTask.on('state_changed', 
-                                () => {}, // Progreso
-                                (error) => {
-                                    // Manejo de error de subida
-                                    console.error(`Error al subir audio Q${num}:`, error);
-                                    if (error.code === 'storage/unauthorized') {
-                                        alert(`❌ ERROR DE FIREBASE: Permiso de subida denegado. VERIFIQUE las Reglas de Seguridad de Firebase Storage (deben ser 'allow read, write: if true;').`);
-                                    } else {
-                                        alert(`❌ Error de Firebase al subir audio Q${num}: ${error.code}.`);
-                                    }
-                                    reject(error); 
-                                }, 
-                                () => {
-                                    // Subida completada
-                                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                                        textOnlyData.responses[`audio${num}URL`] = downloadURL;
-                                        resolve(downloadURL); 
-                                    }).catch(reject);
-                                }
-                            );
-                        })
-                    );
+                    const fileName = `YFI_Q${i}_${dateStamp}.${audioData.mimeType.split('/')[1].split(';')[0]}`;
+                    // Adjuntar el blob con un nombre de archivo
+                    formData.append(`audioFile${i}`, audioData.blob, fileName);
                 }
-            });
+            }
             
-            // 3. Esperar a que todos los audios terminen de subir (o que uno falle)
-            Promise.all(uploadPromises)
-                .then(() => {
-                    // ÉXITO: Todos los audios subieron (o no había ninguno para subir, pero la validación ya lo evitó).
-                    sessionStorage.setItem('testResults', JSON.stringify(textOnlyData)); 
-                    
-                    document.getElementById('questionSection').classList.add('hidden');
-                    document.getElementById('progressBar').classList.add('hidden');
-                    document.getElementById('successScreen').classList.remove('hidden');
-                    
-                    const statusBadge = document.getElementById('statusBadge');
-                    statusBadge.textContent = '● Ocupado';
-                    statusBadge.className = 'status-badge status-occupied';
-                    
-                    alert("¡Test enviado con éxito! Audios subidos a Firebase Storage.");
-                })
-                .catch(error => {
-                    // Fallo: error de Firebase ya manejado en el paso 2
-                    console.error("Fallo general en la subida de audios. El test NO fue guardado.", error);
-                    alert("🚫 Error crítico en la subida. Verifique la consola para detalles. Intente nuevamente.");
-                })
-                .finally(() => {
-                    // Resetear el botón si algo falló.
-                    document.getElementById('nextBtn').disabled = false;
-                    document.getElementById('nextBtn').textContent = 'Enviar Teste ✓'; 
+            // 2. Enviar datos al endpoint de Google Apps Script
+            try {
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    body: formData, // fetch maneja automáticamente el Content-Type: multipart/form-data
+                    // Es CRÍTICO que aquí NO se envíe ningún header Content-Type
                 });
+
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.status !== 'success') {
+                    throw new Error(`Fallo en GAS: ${result.message || 'Error desconocido'}`);
+                }
+
+                // ÉXITO: Los audios fueron subidos a Drive y el log a Google Sheet
+                sessionStorage.setItem('testResults', JSON.stringify({ 
+                    timestamp: new Date().toISOString(), 
+                    message: 'Test enviado a Google Apps Script/Drive' 
+                })); 
+                
+                document.getElementById('questionSection').classList.add('hidden');
+                document.getElementById('progressBar').classList.add('hidden');
+                document.getElementById('successScreen').classList.remove('hidden');
+                
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = '● Ocupado';
+                statusBadge.className = 'status-badge status-occupied';
+                
+                alert("¡Test enviado con éxito! Respuestas guardadas en Google Drive/Sheet.");
+
+            } catch (error) {
+                console.error("🚫 Error en la subida a GAS:", error);
+                alert(`🚫 Error en el envío. Revise la consola y el despliegue de GAS. Detalle: ${error.message}`);
+            } finally {
+                // Resetear el botón
+                document.getElementById('nextBtn').disabled = false;
+                document.getElementById('nextBtn').textContent = 'Enviar Teste ✓'; 
+            }
         }
 
 
@@ -1038,7 +1014,10 @@
                 const hasResults = sessionStorage.getItem('testResults');
                 if (!hasResults) {
                     document.getElementById('testInfo').textContent = 'Não há testes aguardando análise no momento. O sistema está livre para novos alunos.';
+                } else {
+                    document.getElementById('testInfo').innerHTML = '<strong>Teste em andamento.</strong><br>Os resultados estão no Google Drive/Sheet para análise.';
                 }
+                
             } else if (password !== null) {
                 alert('❌ Senha incorreta.');
             }
@@ -1054,64 +1033,14 @@
             document.getElementById('coachPanelSection').classList.add('hidden');
         }
 
-        // Descargar resultados
+        // Descargar resultados (Funcionalidad removida, usar Google Sheet)
         function downloadCoachResults() {
-            const testData = JSON.parse(sessionStorage.getItem('testResults'));
-            if (!testData) {
-                alert('❌ Nenhum resultado encontrado.');
-                return;
-            }
-            
-            const levels = ['A2', 'B1', 'B2'];
-            const date = new Date(testData.timestamp);
-            
-            let textContent = 'YFI PROFILE TEST - RESULTADOS PARA ANÁLISE HUMANIZADA\n';
-            textContent += '='.repeat(60) + '\n\n';
-            textContent += `Data: ${date.toLocaleString('pt-BR')}\n`;
-            textContent += `Timestamp: ${testData.timestamp}\n\n`;
-            textContent += 'INSTRUÇÕES PARA COACH:\n';
-            textContent += 'Analise as respostas escritas e orais para criar um perfil\n';
-            textContent += 'personalizado do nível de inglês do aluno.\n\n';
-            textContent += '='.repeat(60) + '\n\n';
-            
-            questions.forEach((q, i) => {
-                textContent += `\n--- PERGUNTA ${i + 1} (Nível ${levels[i]}) ---\n\n`;
-                textContent += `📝 PERGUNTA ESCRITA:\n${q.textPlain}\n\n`;
-                textContent += `RESPOSTA ESCRITA:\n${testData.responses[`text${i + 1}`] || '[Sem resposta]'}\n\n`;
-                
-                const audioStatus = testData.responses[`audio${i + 1}URL`] 
-                    ? `Áudio gravado. URL Firebase: ${testData.responses[`audio${i + 1}URL`]}` 
-                    : '[Sem áudio gravado]';
-                
-                textContent += `🎤 PERGUNTA ORAL:\n${q.audioPlain}\n\n`;
-                textContent += `RESPOSTA ORAL: ${audioStatus}\n\n`;
-                textContent += '='.repeat(60) + '\n';
-            });
-            
-            textContent += '\n\nNOTAS PARA ANÁLISE:\n';
-            textContent += '- Vocabulário utilizado\n';
-            textContent += '- Estruturas gramaticais\n';
-            textContent += '- Fluência e pronúncia (áudios)\n';
-            textContent += '- Coerencia y coesão\n';
-            textContent += '- Complexidade das respostas\n';
-            
-            const textBlob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-            const textUrl = URL.createObjectURL(textBlob);
-            const textLink = document.createElement('a');
-            textLink.href = textUrl;
-            textLink.download = `YFI_test_${date.getTime()}.txt`;
-            textLink.click();
-            URL.revokeObjectURL(textUrl);
-            
-            let message = 'Arquivos baixados com sucesso!\n\n✓ Respostas escritas (TXT) com URLs de áudio\n';
-            message += '\n📊 Analise os resultados para criar o perfil do aluno.';
-            
-            alert(message);
+             alert('Esta funcionalidad ha sido removida. Por favor, revise el Google Sheet y la carpeta de Google Drive configurada en Google Apps Script para ver los resultados.');
         }
 
         // Limpiar y liberar
         function clearAndRelease() {
-            if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. Certifique-se de ter baixado os resultados antes de continuar.')) {
+            if (confirm('⚠️ Tem certeza que deseja limpar os resultados e liberar o sistema?\n\nEsta ação não pode ser desfeita. O sistema só registra o status localmente. Os dados já foram enviados ao Google Drive/Sheet.')) {
                 sessionStorage.removeItem('testResults');
                 
                 currentStep = 0;
