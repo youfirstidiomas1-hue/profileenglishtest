@@ -6,7 +6,7 @@
     <title>YFI Profile Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS COMPLETO */
+        /* CSS COMPLETO (Omitido por brevedad en la respuesta) */
         * {
             margin: 0;
             padding: 0;
@@ -632,7 +632,7 @@
         // 1. CONFIGURAÇÃO DEL SERVICIO GOOGLE APPS SCRIPT
         // 🛑 IMPORTANTE: PEGA AQUÍ LA URL DE DESPLIEGUE DE TU SCRIPT DE GOOGLE APPS SCRIPT (GAS)
         // (Por ejemplo: https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzz/exec)
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxiS5N08X4t8UWdpID9pomIYzIfhprOV7O7fIOvG7TCDO_l_r8CRfMsFu5mzau3KyEG0g/exec'; 
+        const GAS_WEB_APP_URL = 'URL_DEL_SCRIPT_AQUI'; 
         
         // 2. CONFIGURAÇÃO Y VARIABLES
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
@@ -728,6 +728,11 @@
         // Cargar pregunta
         function loadQuestion() {
             const question = questions[currentStep];
+            
+            // 🛑 CORRECCIÓN CLAVE: Asegurar que no haya grabación activa de la pregunta anterior.
+            if (isRecording) {
+                stopRecording(); 
+            }
             
             document.getElementById('questionNumber').textContent = `Question ${currentStep + 1} of 3`;
             document.getElementById('textQuestion').innerHTML = `<span style="font-size: 24px; margin-right: 8px;">${question.emoji}</span>${question.textQuestion}`;
@@ -848,7 +853,6 @@
             }
             
             // Si aún hay un stream (aunque es menos común en navegadores modernos), asegúrate de detenerlo.
-            // 💡 Esta línea es CRÍTICA: Asegura que el stream se detenga inmediatamente si no se detuvo en onstop.
             if (mediaRecorder && mediaRecorder.stream) {
                 mediaRecorder.stream.getTracks().forEach(track => track.stop());
             }
@@ -950,7 +954,7 @@
         // FUNCIÓN submitTest para GOOGLE APPS SCRIPT (GAS)
         async function submitTest() {
             // 💡 CORRECCIÓN: Asegura que la comprobación de la URL usa el placeholder correcto.
-            if (GAS_WEB_APP_URL === 'URL_DEL_SCRIPT_AQUI') {
+            if (GAS_WEB_APP_URL === 'https://script.google.com/macros/s/AKfycbzdvaEztqLczIVVUcq6-9cRCBqt9ooTCBJsysP7C9jUsZFW3B1iHVXdZQT4zRgi0aeb7A/exec') {
                 alert('❌ ERROR DE CONFIGURAÇÃO: Por favor, pega la URL de tu Google Apps Script en la variable GAS_WEB_APP_URL.');
                 return;
             }
