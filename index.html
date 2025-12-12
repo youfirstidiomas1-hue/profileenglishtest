@@ -632,7 +632,7 @@
         // 1. CONFIGURAÇÃO DEL SERVICIO GOOGLE APPS SCRIPT
         // 🛑 IMPORTANTE: PEGA AQUÍ LA URL DE DESPLIEGUE DE TU SCRIPT DE GOOGLE APPS SCRIPT (GAS)
         // (Por ejemplo: https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzz/exec)
-        const GAS_WEB_APP_URL = 'URL_DEL_SCRIPT_AQUI'; 
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxiS5N08X4t8UWdpID9pomIYzIfhprOV7O7fIOvG7TCDO_l_r8CRfMsFu5mzau3KyEG0g/exec'; 
         
         // 2. CONFIGURAÇÃO Y VARIABLES
         const COACH_PASSWORD = 'coach123'; // Tu contraseña de coach
@@ -843,9 +843,19 @@
         // Detener grabación
         function stopRecording() {
             if (mediaRecorder && isRecording) {
+                // Detiene la grabadora, lo que dispara el evento mediaRecorder.onstop
                 mediaRecorder.stop();
-                // No es necesario detener el stream aquí, mediaRecorder.onstop lo maneja
             }
+            
+            // Si aún hay un stream (aunque es menos común en navegadores modernos), asegúrate de detenerlo.
+            // 💡 Esta línea es CRÍTICA: Asegura que el stream se detenga inmediatamente si no se detuvo en onstop.
+            if (mediaRecorder && mediaRecorder.stream) {
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+            }
+            
+            // Limpieza de variables
+            isRecording = false;
+            mediaRecorder = null; // Reiniciamos la grabadora
         }
 
         // Toggle audio playback
@@ -875,12 +885,22 @@
 
         // Eliminar audio
         function deleteAudio() {
+            // 1. Detener cualquier grabación activa antes de eliminar
+            if (isRecording) {
+                stopRecording(); // Llama a la función robusta de parada
+            }
+            
+            // 2. Limpieza de las respuestas
             responses[`audio${currentStep + 1}`] = null;
+            
+            // 3. Limpieza del reproductor
             if (currentAudio) {
                 currentAudio.pause();
                 currentAudio = null;
             }
             currentAudioPlaying = false;
+            
+            // 4. Volver a mostrar el botón "Grabar"
             loadAudioControls();
         }
 
@@ -929,8 +949,9 @@
 
         // FUNCIÓN submitTest para GOOGLE APPS SCRIPT (GAS)
         async function submitTest() {
-            if (GAS_WEB_APP_URL === 'https://script.google.com/macros/s/AKfycbzfX8PEnJZysOrmNzh7RKpT00L885vHbj9RQTFVeUTxjEpWU1fDKixcEvmLw0G6GZDFpw/exec') {
-                alert('❌ ERROR DE CONFIGURACIÓN: Por favor, pega la URL de tu Google Apps Script en la variable GAS_WEB_APP_URL.');
+            // 💡 CORRECCIÓN: Asegura que la comprobación de la URL usa el placeholder correcto.
+            if (GAS_WEB_APP_URL === 'URL_DEL_SCRIPT_AQUI') {
+                alert('❌ ERROR DE CONFIGURAÇÃO: Por favor, pega la URL de tu Google Apps Script en la variable GAS_WEB_APP_URL.');
                 return;
             }
             
