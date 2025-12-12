@@ -790,77 +790,100 @@
         }
 
         // Iniciar grabación
-        async function startRecording() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    audio: {
-                        echoCancellation: true,
-                        noiseSuppression: true,
-                        autoGainControl: true
-                    } 
-                });
-                
-                let mimeType = 'audio/webm';
-                if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-                    mimeType = 'audio/webm;codecs=opus';
-                } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {mimeType = 'audio/ogg;codecs=opus';
-                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-                    mimeType = 'audio/mp4';
-                }
-                
-                mediaRecorder = new MediaRecorder(stream, { mimeType });
-                audioChunks = [];
-                
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        audioChunks.push(event.data);
-                    }
-                };
-                
-                // 🛑 Asegurar que el stream se detenga solo después de crear el Blob.
-                mediaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: mimeType });
-                    
-                    // Detener todos los tracks del stream para liberar el micrófono.
-                    stream.getTracks().forEach(track => track.stop()); 
-
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    responses[`audio${currentStep + 1}`] = {
-                        url: audioUrl,
-                        blob: audioBlob,
-                        mimeType: mimeType
-                    };
-                    
-                    loadAudioControls();
-                };
-                
-                mediaRecorder.start();
-                isRecording = true;
-                
-                document.getElementById('recordBtn').innerHTML = '⏹ Parar Gravação';
-                document.getElementById('recordBtn').className = 'btn btn-recording';
-            } catch (err) {
-                console.error('Erro ao acessar microfone:', err);
-                alert('Erro ao acessar o microfone. Por favor, verifique as permissões do navegador e tente novamente.');
-            }
+        // Iniciar grabación (CORREGIDA)
+async function startRecording() {
+    // 🛑 1. Limpieza inicial: Asegurar que NO haya grabadora o grabación activa antes de empezar.
+    if (mediaRecorder) {
+        // Detener la grabadora y el stream si aún existe
+        try {
+            mediaRecorder.stop();
+        } catch(e) { /* ignore error if already stopped */ }
+        if (mediaRecorder.stream) {
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
         }
+    }
+    mediaRecorder = null; // Reiniciar
+    isRecording = false; // Reiniciar
 
-        // Detener grabación
-        function stopRecording() {
-            if (mediaRecorder && isRecording) {
-                // Detiene la grabadora, lo que dispara el evento mediaRecorder.onstop
-                mediaRecorder.stop();
+    try {
+        // 2. Solicitar un nuevo Stream de Audio
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: true
+            } 
+        });
+        
+        let mimeType = 'audio/webm';
+        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+            mimeType = 'audio/webm;codecs=opus';
+        } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+            mimeType = 'audio/ogg;codecs=opus';
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+            mimeType = 'audio/mp4';
+        }
+        
+        // 3. Crear una nueva MediaRecorder
+        mediaRecorder = new MediaRecorder(stream, { mimeType });
+        // 🛑 Guardar el stream directamente en la grabadora para acceso fácil en stopRecording()
+        mediaRecorder.stream = stream; 
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
             }
+        };
+        
+        // 4. Lógica de finalización (onstop)
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: mimeType });
             
-            // Si aún hay un stream (aunque es menos común en navegadores modernos), asegúrate de detenerlo.
-            if (mediaRecorder && mediaRecorder.stream) {
+            // Detener todos los tracks del stream para liberar el micrófono.
+            if (mediaRecorder.stream) {
                 mediaRecorder.stream.getTracks().forEach(track => track.stop());
             }
+
+            const audioUrl = URL.createObjectURL(audioBlob);
+            responses[`audio${currentStep + 1}`] = {
+                url: audioUrl,
+                blob: audioBlob,
+                mimeType: mimeType
+            };
             
-            // Limpieza de variables
+            // Limpieza final de variables (ya manejada en stopRecording o por el flujo)
+            mediaRecorder = null;
             isRecording = false;
-            mediaRecorder = null; // Reiniciamos la grabadora
-        }
+            loadAudioControls();
+        };
+        
+        // 5. Iniciar la grabación
+        mediaRecorder.start();
+        isRecording = true;
+        
+        document.getElementById('recordBtn').innerHTML = '⏹ Parar Gravação';
+        document.getElementById('recordBtn').className = 'btn btn-recording';
+    } catch (err) {
+        console.error('Erro ao acessar microfone:', err);
+        alert('Erro ao acessar o microfone. Por favor, verifique as permissões do navegador e tente novamente.');
+    }
+}
+
+// Detener grabación (Asegurarse que también usa mediaRecorder.stream)
+function stopRecording() {
+    if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+    }
+    
+    // Si hay un stream, detenerlo inmediatamente.
+    if (mediaRecorder && mediaRecorder.stream) {
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    }
+    
+    isRecording = false;
+    mediaRecorder = null; 
+}
 
         // Toggle audio playback
         function toggleAudioPlayback() {
