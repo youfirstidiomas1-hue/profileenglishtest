@@ -789,12 +789,12 @@
             }
         }
 
-        // Iniciar grabación
-        // Iniciar grabación (CORREGIDA)
+// Localiza estas funciones en tu <script> (~Línea 1200) y reemplázalas completamente:
+
+// Iniciar grabación (Versión FINAL Robusta)
 async function startRecording() {
-    // 🛑 1. Limpieza inicial: Asegurar que NO haya grabadora o grabación activa antes de empezar.
+    // 1. Limpieza inicial de emergencia: Asegurar que NO haya grabadora o grabación activa antes de empezar.
     if (mediaRecorder) {
-        // Detener la grabadora y el stream si aún existe
         try {
             mediaRecorder.stop();
         } catch(e) { /* ignore error if already stopped */ }
@@ -802,8 +802,8 @@ async function startRecording() {
             mediaRecorder.stream.getTracks().forEach(track => track.stop());
         }
     }
-    mediaRecorder = null; // Reiniciar
-    isRecording = false; // Reiniciar
+    mediaRecorder = null; 
+    isRecording = false; 
 
     try {
         // 2. Solicitar un nuevo Stream de Audio
@@ -826,8 +826,7 @@ async function startRecording() {
         
         // 3. Crear una nueva MediaRecorder
         mediaRecorder = new MediaRecorder(stream, { mimeType });
-        // 🛑 Guardar el stream directamente en la grabadora para acceso fácil en stopRecording()
-        mediaRecorder.stream = stream; 
+        mediaRecorder.stream = stream; // Guardar el stream para liberarlo
         audioChunks = [];
         
         mediaRecorder.ondataavailable = (event) => {
@@ -836,12 +835,12 @@ async function startRecording() {
             }
         };
         
-        // 4. Lógica de finalización (onstop)
+        // 4. Lógica de finalización (onstop) - CRÍTICO: Aquí se hace la limpieza final
         mediaRecorder.onstop = () => {
             const audioBlob = new Blob(audioChunks, { type: mimeType });
             
-            // Detener todos los tracks del stream para liberar el micrófono.
-            if (mediaRecorder.stream) {
+            // Detener todos los tracks del stream para liberar el micrófono
+            if (mediaRecorder && mediaRecorder.stream) { // Verificación extra de seguridad
                 mediaRecorder.stream.getTracks().forEach(track => track.stop());
             }
 
@@ -852,10 +851,10 @@ async function startRecording() {
                 mimeType: mimeType
             };
             
-            // Limpieza final de variables (ya manejada en stopRecording o por el flujo)
+            // Limpieza de estado final DESPUÉS de guardar el audio:
             mediaRecorder = null;
             isRecording = false;
-            loadAudioControls();
+            loadAudioControls(); // Actualizar la UI (botón de grabar a 'Play/Regrabar')
         };
         
         // 5. Iniciar la grabación
@@ -867,22 +866,26 @@ async function startRecording() {
     } catch (err) {
         console.error('Erro ao acessar microfone:', err);
         alert('Erro ao acessar o microfone. Por favor, verifique as permissões do navegador e tente novamente.');
+        isRecording = false;
+        mediaRecorder = null;
     }
 }
 
-// Detener grabación (Asegurarse que también usa mediaRecorder.stream)
+// Detener grabación (CORREGIDA: Solo llama a mediaRecorder.stop() y limpia el estado inmediato)
 function stopRecording() {
+    // 🛑 CRÍTICO: Si la grabadora existe y está activa, detenla.
+    // El onstop se encargará de liberar el micrófono, guardar el audio y actualizar la UI.
     if (mediaRecorder && isRecording) {
         mediaRecorder.stop();
+        isRecording = false; // Estado para evitar doble click/llamada mientras onstop se dispara
     }
     
-    // Si hay un stream, detenerlo inmediatamente.
-    if (mediaRecorder && mediaRecorder.stream) {
+    // Limpieza de emergencia del stream (si el onstop falló o nunca se llamó)
+    else if (mediaRecorder && mediaRecorder.stream) {
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        mediaRecorder = null;
+        isRecording = false;
     }
-    
-    isRecording = false;
-    mediaRecorder = null; 
 }
 
         // Toggle audio playback
