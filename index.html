@@ -991,6 +991,7 @@ function stopRecording() {
 
             const formData = new FormData();
             const dateStamp = new Date().getTime();
+            formData.append('clientTimestamp', dateStamp);
 
             // 1. Recopilar datos de texto y audio para FormData
             for (let i = 1; i <= 3; i++) {
