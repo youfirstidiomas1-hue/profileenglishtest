@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YFI Profile Test | Assessment</title>
+    <title>YFI Profile Test | English Assessment</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* CSS TECH STYLE */
@@ -12,7 +12,13 @@
         .container { max-width: 700px; width: 100%; background: linear-gradient(145deg, #1a0226, #2c0439); border-radius: 24px; padding: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.6); border: 1px solid rgba(191, 158, 75, 0.3); position: relative; }
         .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid rgba(191, 158, 75, 0.2); padding-bottom: 20px; }
         .header h1 { color: #bf9e4b; font-size: 28px; }
-        .info-box { background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; margin-bottom: 25px; border-left: 4px solid #bf9e4b; }
+        
+        /* CAJA DE INSTRUCCIONES EN PORTUGUÉS */
+        .pt-instructions { background: rgba(191, 158, 75, 0.1); padding: 25px; border-radius: 15px; margin-bottom: 25px; border-left: 5px solid #bf9e4b; line-height: 1.6; }
+        .pt-instructions h4 { color: #bf9e4b; margin-bottom: 10px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
+        .pt-instructions p { font-size: 14px; color: #e0e0e0; margin-bottom: 10px; }
+        .pt-instructions strong { color: #ffffff; }
+
         .question-text { font-size: 17px; margin-bottom: 15px; color: #e0e0e0; line-height: 1.5; }
         textarea { width: 100%; min-height: 100px; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(191, 158, 75, 0.4); color: white; font-family: inherit; margin-bottom: 20px; outline: none; }
         .btn { padding: 15px 30px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 10px; }
@@ -31,14 +37,17 @@
 
 <div class="container">
     <div class="header">
-        <h1>YFI Profile Test</h1>
+        <h1>Profile Assessment (English)</h1>
     </div>
 
     <div id="intro">
-        <div class="info-box">
-            <p>Bem-vindo ao teste de nivelamento tecnológico. Use o microfone e o teclado para responder.</p>
+        <div class="pt-instructions">
+            <h4>Instruções Importantes</h4>
+            <p>Este teste não tem nota nem será armazenado depois que a <strong>Coach Laura</strong> ler e ouvir suas respostas. O propósito deste teste é descobrir seus pontos fortes e os pontos em que devemos trabalhar.</p>
+            <p>As perguntas são em <strong>inglês</strong> e é obrigatório que você responda no idioma. Se você não entender a pergunta, escreva <strong>"I don't know"</strong> e, se entender, tente responder da maneira que puder.</p>
+            <p>Não existem respostas incorretas. Em nossos programas, você deve aprender a superar o medo do erro, então tente responder o máximo que puder em cada pergunta. Se tiver dúvidas, pode chamar a coach!</p>
         </div>
-        <button class="btn btn-primary" onclick="startTest()">INICIAR TESTE</button>
+        <button class="btn btn-primary" onclick="startTest()">START ASSESSMENT</button>
     </div>
 
     <div id="testArea" class="hidden">
@@ -46,19 +55,19 @@
         <h3 id="qTitle" style="color: #bf9e4b; margin-bottom: 20px;">Question 1 of 3</h3>
         
         <p class="question-text" id="textLabel"></p>
-        <textarea id="textInput" placeholder="Escriba aquí su respuesta..."></textarea>
+        <textarea id="textInput" placeholder="Type your answer here..."></textarea>
 
         <p class="question-text" id="audioLabel"></p>
-        <button id="recordBtn" class="btn btn-record">🎤 Iniciar Gravação</button>
-        <span id="re-record" class="hidden" onclick="resetAudio()">Apagar e gravar de novo</span>
+        <button id="recordBtn" class="btn btn-record">🎤 Start Recording Audio</button>
+        <span id="re-record" class="hidden" onclick="resetAudio()">Delete and record again</span>
 
-        <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" style="margin-top: 30px;">PRÓXIMA PERGUNTA</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" style="margin-top: 30px;">NEXT QUESTION</button>
     </div>
 
     <div id="success" class="hidden" style="text-align: center;">
         <div style="font-size: 50px; margin-bottom: 20px;">✅</div>
-        <h2 style="color: #bf9e4b;">Teste Concluído!</h2>
-        <p style="margin: 20px 0;">As suas respostas foram enviadas para a nuvem. A sua coach entrará em contato em breve.</p>
+        <h2 style="color: #bf9e4b;">Assessment Completed!</h2>
+        <p style="margin: 20px 0;">Your responses have been uploaded to the cloud. Coach Laura will review them shortly.</p>
     </div>
 </div>
 
@@ -78,11 +87,11 @@
     firebase.initializeApp(firebaseConfig);
     const storage = firebase.storage();
 
-    // 2. DATOS DE PREGUNTAS
+    // 2. PREGUNTAS EN INGLÉS
     const questions = [
         { t: "What do you do every day? Describe your daily routine.", a: "What did you do yesterday? Describe your day from morning to evening." },
         { t: "Can you describe a challenging situation you faced at work?", a: "Tell me about a time when you had to learn something new quickly." },
-        { t: "What is your perspective on technology in education?", a: "If you could change one thing about how English is taught, what would it be?" }
+        { t: "What is your perspective on technology in education today?", a: "If you could change one thing about how English is taught, what would it be?" }
     ];
 
     let current = 0;
@@ -90,7 +99,7 @@
     let mediaRecorder;
     let chunks = [];
 
-    // 3. FLUJO DEL TEST
+    // 3. FLUJO
     function startTest() {
         document.getElementById('intro').classList.add('hidden');
         document.getElementById('testArea').classList.remove('hidden');
@@ -104,18 +113,13 @@
         document.getElementById('textInput').value = results.text[current] || "";
         document.getElementById('progressFill').style.width = ((current + 1) / 3 * 100) + "%";
         
-        // Si ya hay un audio grabado para esta pregunta
-        if (results.audios[current]) {
-            setAudioSuccessUI();
-        } else {
-            resetAudioUI();
-        }
+        if (results.audios[current]) { setAudioSuccessUI(); } else { resetAudioUI(); }
     }
 
     function nextStep() {
         const textVal = document.getElementById('textInput').value;
         if(!textVal || !results.audios[current]) {
-            alert("Por favor, responda o texto e grave o áudio antes de prosseguir.");
+            alert("Please provide both written and spoken answers before proceeding.");
             return;
         }
         results.text[current] = textVal;
@@ -128,17 +132,14 @@
         }
     }
 
-    // 4. LÓGICA DE AUDIO MEJORADA
+    // 4. LÓGICA GRABACIÓN
     const recordBtn = document.getElementById('recordBtn');
-
     recordBtn.onclick = async () => {
         if (!mediaRecorder || mediaRecorder.state === "inactive") {
-            // INICIAR GRABACIÓN
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
                 chunks = [];
-                
                 mediaRecorder.ondataavailable = e => chunks.push(e.data);
                 mediaRecorder.onstop = () => {
                     const blob = new Blob(chunks, { type: 'audio/webm' });
@@ -146,69 +147,50 @@
                     setAudioSuccessUI();
                     stream.getTracks().forEach(track => track.stop());
                 };
-
                 mediaRecorder.start();
-                recordBtn.innerText = "⏹ Parar Gravação";
+                recordBtn.innerText = "⏹ Stop Recording";
                 recordBtn.className = "btn btn-recording";
-            } catch (err) {
-                alert("Erro ao acessar microfone. Verifique as permissões.");
-            }
-        } else {
-            // DETENER GRABACIÓN
-            mediaRecorder.stop();
-        }
+            } catch (err) { alert("Error accessing microphone."); }
+        } else { mediaRecorder.stop(); }
     };
 
-    function resetAudio() {
-        results.audios[current] = null;
-        resetAudioUI();
-    }
-
+    function resetAudio() { results.audios[current] = null; resetAudioUI(); }
     function resetAudioUI() {
-        recordBtn.innerText = "🎤 Iniciar Gravação";
+        recordBtn.innerText = "🎤 Start Recording Audio";
         recordBtn.className = "btn btn-record";
         recordBtn.style.pointerEvents = "auto";
         document.getElementById('re-record').classList.add('hidden');
     }
-
     function setAudioSuccessUI() {
-        recordBtn.innerText = "✅ Áudio Gravado";
+        recordBtn.innerText = "✅ Audio Recorded";
         recordBtn.className = "btn btn-success";
         recordBtn.style.pointerEvents = "none";
         document.getElementById('re-record').classList.remove('hidden');
     }
 
-    // 5. SUBIDA FINAL
+    // 5. SUBIDA
     async function uploadToFirebase() {
         const btn = document.getElementById('nextBtn');
-        btn.innerText = "Enviando para a nuvem...";
+        btn.innerText = "Uploading to cloud...";
         btn.disabled = true;
 
         try {
             const timestamp = Date.now();
             const uploadPromises = results.audios.map((blob, i) => {
-                const ref = storage.ref(`audios/${timestamp}_Q${i+1}.webm`);
+                // CARPETA DIFERENTE PARA INGLÉS
+                const ref = storage.ref(`audios_ingles/${timestamp}_Q${i+1}.webm`);
                 return ref.put(blob).then(snap => snap.ref.getDownloadURL());
             });
 
-            const urls = await Promise.all(uploadPromises);
-            
-            // Guardar confirmación en sessionStorage
-            sessionStorage.setItem('testResults', JSON.stringify({
-                timestamp,
-                text: results.text,
-                audioUrls: urls
-            }));
-
+            await Promise.all(uploadPromises);
             document.getElementById('testArea').classList.add('hidden');
             document.getElementById('success').classList.remove('hidden');
         } catch (error) {
-            alert("Erro no Firebase: " + error.message);
-            btn.innerText = "Tentar novamente";
+            alert("Error: " + error.message);
+            btn.innerText = "Try again";
             btn.disabled = false;
         }
     }
 </script>
-
 </body>
 </html>
